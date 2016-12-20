@@ -1,0 +1,38 @@
+License Terms
+
+Copyright (c) 2010, Guillaume MAZE
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in
+      the documentation and/or other materials provided with the distribution
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+
+NOAA Disclaimer, August 27, 2015
+
+Author: Peter A. Rochford
+        CSS-Dynamac (Contractor)
+        NOAA/NOS/NCCOS/CCMA/COAST
+        peter.rochford@noaa.gov
+
+This software is provided by NOAA for full, free and open release subject to the 2010 author copyright above. This software and supporting information is furnished by the Government of the United States of America, and is accepted and used by the recipient with the understanding that the United States Government makes no warranties, express or implied, concerning the accuracy, completeness, reliability, or suitability of this program, of its constituent parts, or of any supporting data. The Government of the United States of America shall be under no liability whatsoever resulting from any use of this software. This software should not be relied upon as the sole basis for solving a problem whose incorrect solution could result in injury to person or property.
+
+Although this software is released without conditions or restrictions in its use, it is expected that appropriate credit be given to its author and the NOAA branch office cited above should the software be included by the recipient as an element in other product development.
