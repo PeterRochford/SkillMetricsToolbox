@@ -39,7 +39,7 @@ function [option] = get_target_diagram_options(narg,varargin)
 %                            values (Default 'off')
 %   option.obsUncertainty  : Observational Uncertainty (default of 0)
 %   option.overlay         : 'on'/'off' switch to overlay current
-%                            statistics on Taylor diagram (Default 'off')
+%                            statistics on target diagram (Default 'off')
 %                            Only markers will be displayed.
 %   option.ticks           : define tick positions (default is that used 
 %     by the axis function)
@@ -117,29 +117,3 @@ end % iopt loop
 option.colormap = option.nonRMSDz;
 
 end %function get_target_diagram_options
-
-function value = check_on_off(value)
-%CHECK_ON_OFF(VALUE)
-%   Check whether variable contains a value of "on" or 'off'. Returns an
-%   error if neither.
-%
-%   INPUTS:
-%   value : string to check
-%
-%   OUTPUTS:
-%   None.
-
-switch lower(value)
-    case 'off'
-        return;
-    case 'on'
-        return;
-    case false
-        value = 'off';
-    case true
-        value = 'on';
-    otherwise
-        error(['Invalid value: ' value]);
-end
-
-end %function check_on_off

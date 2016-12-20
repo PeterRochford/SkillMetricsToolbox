@@ -22,7 +22,7 @@ function ax = plot_taylor_axes(axes, cax, option)
 %   option.titleSTD     : title fot STD axis
 %
 %   OUTPUTS:
-%	ax: returns a structure of handles of axis labels
+%	  ax: returns a data structure of handles of axis labels
 
 ax = [];
 axlabweight = 'bold';
@@ -32,10 +32,18 @@ if option.numberPanels == 1
     
     if strcmp(option.titleSTD,'on')
         ix = ix + 1;
-        ax(ix).handle = ylabel('Standard Deviation', ...
-            'color',option.colSTD,'fontweight',axlabweight);
+        if is_octave()
+          ttt = ylabel('test','fontsize',14);
+          x = -0.1*axes.rmax; y = 0.25*axes.rmax;
+          ax(ix).handle = text(x,y,'Standard Deviation', ...
+          'rotation',90, 'color',option.colSTD, ...
+          'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
+        else
+          ax(ix).handle = ylabel('Standard Deviation', ...
+              'color',option.colSTD,'fontweight',axlabweight);
+        end
     end
-    
+
     if strcmp(option.titleCOR,'on')
         ix = ix + 1;
         clear ttt
@@ -59,14 +67,17 @@ if option.numberPanels == 1
     if strcmp(option.titleRMS,'on')
         ix = ix + 1;
         clear ttt
-        pos1 = option.tickRMSangle+(180-option.tickRMSangle)/2; DA = 15; pos1 = 160;
+        DA = 15; pos1 = 160;
         lab = 'RMSD';
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
-        dd = 1.05*option.tickRMS(1);
-        dd = .95*option.tickRMS(2);
+        if option.tickRMS(1) > 0
+          dd = 0.7*option.tickRMS(1)+0.3*option.tickRMS(2);
+        else
+          dd = 0.7*option.tickRMS(2)+0.3*option.tickRMS(3);
+        end
         ii = 0;
         for ic = 1 : length(c)
-            ith = c(ic);
+            ith = c(ic); 
             ii = ii + 1;
             xtextpos = double(axes.dx+dd*cos(ith*pi/180));
             ytextpos = dd*sin(ith*pi/180);
@@ -84,14 +95,23 @@ else
 
     if strcmp(option.titleSTD,'on')
         ix = ix + 1;
-        ax(ix).handle =xlabel('Standard Deviation','fontweight', ...
-            axlabweight,'color',option.colSTD);
+        if is_octave()
+          ttt = ylabel('test','fontsize',14);
+          x = 0; y = -0.15*axes.rmax;
+          ax(ix).handle = text(x,y,'Standard Deviation', ...
+          'rotation',0, 'color',option.colSTD, ...
+          'HorizontalAlignment', 'center', ...
+          'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
+        else
+          ax(ix).handle = ylabel('Standard Deviation', ...
+              'color',option.colSTD,'fontweight',axlabweight);
+        end
     end
     
     if strcmp(option.titleCOR,'on')
         ix = ix + 1;
         clear ttt
-        pos1 = 90;	DA = 15;
+        pos1 = 90;	DA = 25;
         lab = 'Correlation Coefficient';
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
         dd = 1.1*axes.rmax;	ii = 0;
@@ -114,15 +134,20 @@ else
         pos1 = 160; DA = 10;
         lab = 'RMSD';
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
-        dd = 1.05*option.tickRMS(1); ii = 0;
+        if option.tickRMS(1) > 0
+          dd = 0.7*option.tickRMS(1)+0.3*option.tickRMS(2);
+        else
+          dd = 0.7*option.tickRMS(2)+0.3*option.tickRMS(3);
+        end
+        ii = 0;
         for ic = 1 : length(c)
             ith = c(ic);
             ii = ii + 1;
             
             xtextpos = double(axes.dx+dd*cos(ith*pi/180));
             ytextpos = double(dd*sin(ith*pi/180));
-            ttt(ii)=text(xtextpos,ytextpos,lab(ii));
-            set(ttt(ii),'rotation',ith-90,'color',option.colRMS, ...
+            ttt(ii) = text(xtextpos,ytextpos,lab(ii));
+            set(ttt(ii),'Rotation',90.0,'color',option.colRMS, ...
                 'horizontalalignment','center', ...
                 'verticalalignment','bottom', ...
                 'fontsize',get(ax(1).handle,'fontsize'), ...
@@ -133,7 +158,7 @@ else
 end
 
 % VARIOUS ADJUSTMENTS TO THE PLOT:
-set(cax,'dataaspectratio',[1 1 1]), axis(cax,'off');
+set(cax,'dataaspectratio',[1 1 1]); axis(cax,'off');
 set(cax,'NextPlot',axes.next);
 set(get(cax,'xlabel'),'visible','on')
 set(get(cax,'ylabel'),'visible','on')

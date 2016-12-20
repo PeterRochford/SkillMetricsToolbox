@@ -14,8 +14,7 @@ function [stats] = taylor_statistics(predicted,reference,field)
 %   the name of the field must be supplied in FIELD.
 %
 %   The function currently supports only data structures for the PREDICTED 
-%   and REFERENCE variables, but will be extended to other variable types 
-%   in future.
+%   and REFERENCE variables.
 %
 %   Input:
 %   PREDICTED : predicted field
@@ -85,8 +84,15 @@ for i=1:length(pdims)
 end
 
 % Calculate correlation coefficient
-ccoef = corrcoef(p,r);
-ccoef = [1.0 ccoef(1,2)];
+if (is_octave)
+  % Use Octave function
+  ccoef = corr(p,r); % Octave
+  ccoef = [1.0 ccoef];
+else
+  % Use Matlab function
+  ccoef = corrcoef(p,r);
+  ccoef = [1.0 ccoef(1,2)];
+end
 
 % Calculate centered root-mean-square (RMS) difference (E')^2
 crmsd = [0.0 centered_rms_dev(p,r)];

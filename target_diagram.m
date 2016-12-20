@@ -20,8 +20,8 @@ function varargout = target_diagram(varargin)
 %
 % OUTPUTS:
 % 	hp: returns handles of plotted points
-%	ht: returns handles of the text legend of points
-%	axl: returns a structure of handles of axis labels
+%  	ht: returns handles of the text legend of points
+%	  axl: returns a structure of handles of axis labels
 %
 % LIST OF OPTIONS:
 %	For an exhaustive list of options to customize your diagram, please 
@@ -116,7 +116,7 @@ switch lower(option.markerDisplayed)
     case 'colorbar'
         hp = plot_pattern_diagram_colorbar(RMSDs,Bs,RMSDz,option);
     otherwise
-        error(['Unrecognized option: ' optname]);
+        error(['Unrecognized option: ' option.markerDisplayed]);
 end
 
 % __ Return appropriate arguments

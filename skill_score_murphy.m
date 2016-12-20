@@ -2,7 +2,7 @@ function ss = skill_score_murphy(predicted,reference)
 %SKILL_SCORE_MURPHY Calculate nondimensional skill score (SS) between two variables
 %
 %   SS = SKILL_SCORE_MURPHY(PREDICTED,REFERENCE) calculates the 
-%   nondimensional skill score (SS) difference between two variables 
+%   non-dimensional skill score (SS) difference between two variables 
 %   PREDICTED and REFERENCE. The skill score is calculated using the
 %   formula:
 %
@@ -11,7 +11,7 @@ function ss = skill_score_murphy(predicted,reference)
 %   where RMSE is the root-mean-squre error between the predicted and
 %   reference values
 %
-%   (RMSE)^2 = sum_(n=1)^N (p_n - r_n)^2/N
+%   (RMSD)^2 = sum_(n=1)^N (p_n - r_n)^2/N
 %
 %   and SDEV is the standard deviation of the reference values
 %
@@ -58,7 +58,7 @@ for i=1:length(pdims)
 end
 
 % Calculate RMSE
-rmse2 = rmse(predicted,reference)^2;
+rmse2 = rms_dev(predicted,reference)^2;
 
 % Calculate standard deviation
 sdev2 = std(reference)^2;

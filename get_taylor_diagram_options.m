@@ -115,84 +115,84 @@ for iopt = 4 : 2 : narg+3
     optname  = varargin{iopt};
     optvalue = varargin{iopt+1};
 	switch lower(optname)
-        case 'checkstats'
-            option.checkSTATS = optvalue;
-            option.checkSTATS = check_on_off(option.checkSTATS);
-		case 'colcor'
-			option.colCOR = optvalue;
-		case 'colrms'
-			option.colRMS = optvalue;
-        case 'colstd'
-            option.colSTD = optvalue;
-        case 'limstd'
-            option.axismax = optvalue;
-        case 'markerdisplayed'
-            option.markerDisplayed=optvalue;
-        case 'markercolor'
-            option.markerColor=optvalue;
-        case 'markerlabel'
-            % Exclude the label for the reference statistics
-            option.markerLabel=optvalue(2:end);
-        case 'markerlabelcolor'
-            option.markerLabelColor=optvalue;
-        case 'markerlegend'
-            option.markerLegend=optvalue;
-            check_on_off(option.markerLegend);
-        case 'nonrmsdz'
-            option.nonRMSDz=optvalue;
-            check_on_off(option.nonRMSDz);
-        case 'numberpanels'
-            option.numberPanels = optvalue;
-        case 'overlay'
-            option.overlay=optvalue;
-            check_on_off(option.overlay);
-		case 'showlabelscor'
-			option.showlabelsCOR = optvalue;
-            check_on_off(option.showlabelsCOR);
-        case 'showlabelsrms'
-			option.showlabelsRMS = optvalue;
-            check_on_off(option.showlabelsRMS);
-		case 'showlabelsstd'
-			option.showlabelsSTD = optvalue;
+    case 'checkstats'
+          option.checkSTATS = optvalue;
+          option.checkSTATS = check_on_off(option.checkSTATS);
+    case 'colcor'
+         option.colCOR = optvalue;
+    case 'colrms'
+         option.colRMS = optvalue;
+    case 'colstd'
+        option.colSTD = optvalue;
+    case 'limstd'
+        option.axismax = optvalue;
+    case 'markerdisplayed'
+        option.markerDisplayed=optvalue;
+    case 'markercolor'
+        option.markerColor=optvalue;
+    case 'markerlabel'
+        % Exclude the label for the reference statistics
+        option.markerLabel=optvalue(2:end);
+    case 'markerlabelcolor'
+        option.markerLabelColor=optvalue;
+    case 'markerlegend'
+        option.markerLegend=optvalue;
+        check_on_off(option.markerLegend);
+    case 'nonrmsdz'
+        option.nonRMSDz=optvalue;
+        check_on_off(option.nonRMSDz);
+    case 'numberpanels'
+        option.numberPanels = optvalue;
+    case 'overlay'
+        option.overlay=optvalue;
+        check_on_off(option.overlay);
+    case 'showlabelscor'
+        option.showlabelsCOR = optvalue;
+        check_on_off(option.showlabelsCOR);
+    case 'showlabelsrms'
+        option.showlabelsRMS = optvalue;
+        check_on_off(option.showlabelsRMS);
+    case 'showlabelsstd'
+      option.showlabelsSTD = optvalue;
             check_on_off(option.showlabelsSTD);
-		case 'stylecor'
-			option.styleCOR = optvalue;
-		case 'stylerms'
-			option.styleRMS = optvalue;
-		case 'stylestd'
-			option.styleSTD = optvalue;
-		case 'tickcor'
-			option.tickCOR(option.numberPanels).val = optvalue;
-		case 'tickrms'
-			option.tickRMS = sort(optvalue);
-			option.rincRMS = (max(option.tickRMS)-min(option.tickRMS))/ ...
+    case 'stylecor'
+      option.styleCOR = optvalue;
+    case 'stylerms'
+      option.styleRMS = optvalue;
+    case 'stylestd'
+      option.styleSTD = optvalue;
+    case 'tickcor'
+      option.tickCOR(option.numberPanels).val = optvalue;
+    case 'tickrms'
+      option.tickRMS = sort(optvalue);
+      option.rincRMS = (max(option.tickRMS)-min(option.tickRMS))/ ...
                 length(option.tickRMS);				
-		case 'tickrmsangle'
-			option.tickRMSangle = optvalue;
-        case 'tickstd'
-            option.tickSTD = sort(optvalue);
-            option.rincSTD = (max(option.tickSTD)-min(option.tickSTD))/ ...
-                length(option.tickSTD);
-        case 'titlecolorbar'
-            option.titleColorBar=optvalue;
-		case 'titlecor'
-			option.titleCOR = optvalue;
-            check_on_off(option.titleCOR);
-		case 'titlerms'
-			option.titleRMS = optvalue;
-            check_on_off(option.titleRMS);
-		case 'titlestd'
-			option.titleSTD = optvalue;
-            check_on_off(option.titleSTD);
-		case 'widthcor'
-			option.widthCOR = optvalue;
-		case 'widthrms'
-			option.widthRMS = optvalue;
-		case 'widthstd'
-			option.widthSTD = optvalue;
+    case 'tickrmsangle'
+      option.tickRMSangle = optvalue;
+    case 'tickstd'
+        option.tickSTD = sort(optvalue);
+        option.rincSTD = (max(option.tickSTD)-min(option.tickSTD))/ ...
+            length(option.tickSTD);
+    case 'titlecolorbar'
+        option.titleColorBar=optvalue;
+    case 'titlecor'
+      option.titleCOR = optvalue;
+      check_on_off(option.titleCOR);
+    case 'titlerms'
+      option.titleRMS = optvalue;
+      check_on_off(option.titleRMS);
+    case 'titlestd'
+      option.titleSTD = optvalue;
+      check_on_off(option.titleSTD);
+    case 'widthcor'
+      option.widthCOR = optvalue;
+    case 'widthrms'
+      option.widthRMS = optvalue;
+    case 'widthstd'
+      option.widthSTD = optvalue;
 
-        otherwise
-			error(['Unrecognized option: ' optname]);
+    otherwise
+  		error(['Unrecognized option: ' optname]);
 	end
 end % iopt loop
 
@@ -202,29 +202,3 @@ if strcmp(option.nonRMSDz,'on')
 end
 
 end %function get_taylor_diagram_options
-
-function value = check_on_off(value)
-%CHECK_ON_OFF(VALUE)
-%   Check whether variable contains a value of "on" or 'off'. Returns an
-%   error if neither.
-%
-%   INPUTS:
-%   value : string to check
-%
-%   OUTPUTS:
-%   None.
-
-switch lower(value)
-    case 'off'
-        return;
-    case 'on'
-        return;
-    case false
-        value = 'off';
-    case true
-        value = 'on';
-    otherwise
-        error(['Invalid value: ' value]);
-end
-
-end %function check_on_off

@@ -2,7 +2,7 @@ function overlay_taylor_diagram_circles(axes,cax,option)
 %OVERLAY_TAYLOR_DIAGRAM_CIRCLES Overlays circle contours on a Taylor diagram.
 %
 %   OVERLAY_TAYLOR_DIAGRAM_CIRCLES(OPTION)
-%   Plots circle contours on a taylor diagram to indicate root mean square 
+%   Plots circle contours on a Taylor diagram to indicate root mean square 
 %   (RMS) and standard deviation values.
 %
 %   INPUTS:
@@ -43,7 +43,6 @@ xunit(inds(2:2:4)) = zeros(2,1);
 yunit(inds(1:2:5)) = zeros(3,1);
 % plot background if necessary
 if ~ischar(get(cax,'color')),
-    %		ig = find(th>=0 & th<=pi);
     ig = 1:length(th);
     patch('xdata',xunit(ig)*axes.rmax,'ydata',yunit(ig)*axes.rmax, ...
         'edgecolor',axes.tc,'facecolor',get(cax,'color'),...
@@ -54,10 +53,10 @@ end
 % ANGLE OF THE TICK LABELS
 c82 = cos(option.tickRMSangle*pi/180);
 s82 = sin(option.tickRMSangle*pi/180);
+radius = sqrt(axes.dx^2+axes.rmax^2-2*axes.dx*axes.rmax*xunit);
 for ic = 1 : length(option.tickRMS)
     iradius = option.tickRMS(ic);
-    iphic = find( sqrt(axes.dx^2+axes.rmax^2-2*axes.dx*axes.rmax*xunit)...
-        >= iradius, 1);
+    iphic = find(radius >= iradius, 1);
     ig = find(iradius*cos(th)+axes.dx <= axes.rmax*cos(th(iphic)));
     hhh = line(xunit(ig)*iradius+axes.dx,yunit(ig)*iradius,'linestyle', ...
         option.styleRMS,'color',option.colRMS,'linewidth', ...

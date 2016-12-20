@@ -20,6 +20,9 @@ function [axes,option] = get_target_diagram_axes(x,y,option)
 %   axes.ylabel : labels for ytick values
 %   option : data structure containing updated option values
 
+% save nxticks and nyticks between function calls
+persistent nxticks_old nyticks_old
+
 % Specify max/min for axes
 if isfield(option, 'axismax')
     foundmax = 1;
@@ -38,11 +41,16 @@ else
 end
 
 % Determine default number of tick marks
-hhh = line([-maxx -maxx maxx maxx],[-maxy maxy maxy -maxy],'parent',gca);
-set(gca,'dataaspectratio',[1 1 1],'plotboxaspectratiomode','auto')
+hhh = plot([-maxx -maxx maxx maxx],[-maxy maxy maxy -maxy]);
 v = [get(gca,'xlim') get(gca,'ylim')];
-nxticks = sum(get(gca,'xtick')>0);
-nyticks = sum(get(gca,'ytick')>0);
+get(gca,'xtick');
+ntest = sum(get(gca,'xtick')>0);
+if ntest > 0
+  nxticks = sum(get(gca,'xtick')>0); nyticks = sum(get(gca,'ytick')>0);
+  nxticks_old = nxticks; nyticks_old = nyticks;
+else
+  nxticks = nxticks_old; nyticks = nyticks_old;
+end
 delete(hhh);
 
 % Set default tick increment and maximum axis values
@@ -50,10 +58,10 @@ if foundmax == 0;
     maxx = v(2);
     maxy = v(4);
     option.axismax = max(maxx, maxy);
-end
+endif
 
 % Check if equal axes requested
-if isfield(option,'equalAxes') & strcmp(option.equalAxes,'on')
+if isfield(option,'equalAxes') && strcmp(option.equalAxes,'on')
     if maxx > maxy
         maxy = maxx;
         nyticks = nxticks;
@@ -66,7 +74,7 @@ minx = -maxx;
 miny = -maxy;
 
 % Determine tick values
-if isfield(option, 'ticks') & length(option.ticks) > 0
+if isfield(option, 'ticks') && length(option.ticks) > 0
     xtick = option.ticks;
     ytick = option.ticks;
 else
@@ -120,4 +128,5 @@ axes.ytick = ytick;
 axes.xlabel = xlabel;
 axes.ylabel = ylabel;
 
+%axes % debug
 end % function get_target_diagram_axes

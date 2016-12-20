@@ -9,8 +9,8 @@
 % designed to only work with one-dimensional arrays, e.g. time series of
 % observations at a selected location. The one-dimensional data are read in
 % as data structures via a mat file. The latter are stored in data
-% structures in the format: ref.data, pred1.data, pred2.dat, and
-% pred3.dat. The plot is written to a file in Portable Network Graphics
+% structures in the format: ref.data, pred1.data, pred2.data, and
+% pred3.data. The plot is written to a file in Portable Network Graphics
 % (PNG) format.
 %
 % The reference data used in this example are cell concentrations of a
@@ -19,7 +19,7 @@
 % have been space-time interpolated to the location and time of the sample
 % collection. Details on the contents of the data structures (once loaded)
 % can be obtained by simply entering the data structure variable name at 
-% the command prompt, e.g. 
+% the command prompt, e.g. for Matlab
 % >> ref
 % ref = 
 %          data: [57x1 double]
@@ -31,6 +31,22 @@
 %          time: {57x1 cell}
 %         units: 'cell/L'
 %          jday: [57x1 double]
+%
+% while for Octave
+%
+% >> fieldnames(ref)
+% ans =
+% {
+%   [1,1] = data
+%   [2,1] = date
+%   [3,1] = depth
+%   [4,1] = latitude
+%   [5,1] = longitude
+%   [6,1] = station
+%   [7,1] = time
+%   [8,1] = units
+%   [9,1] = jday
+% }
 
 % Author: Peter A. Rochford
 %         CSS-Dynamac (Contractor)

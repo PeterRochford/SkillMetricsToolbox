@@ -31,34 +31,29 @@ function varargout = plot_pattern_diagram_colorbar(X,Y,Z,option)
 % 	hp: returns handles of plotted points
 
 % Plot color shaded data points using scatter plot
-hp=scatter(X,Y,30,Z);
+hp=scatter(X,Y,40,Z);
 set(hp,'MarkerFaceColor',get(hp,'MarkerEdgeColor'),'Marker','d')
+
+% Set Matlab/Octave scaling for color bar position
+if is_octave()
+  xscale = 0.85; yscale = 0.75; cxscale = 0.7;
+else
+  xscale = 1.0; yscale = 1.0; cxscale = 1.0;
+end
 
 % Add color bar to plot
 switch option.colormap
     case 'on'
         hc=colorbar('Location','NorthOutside');
-        cp=get(hc,'Position');
-        if isfield(option,'checkSTATS')
-            % Taylor diagram
-            location = [cp(1)+0.8*cp(3) cp(2) cp(3)/3 cp(4)/2];
-        else
-            % target diagram
-            location = [cp(1)+cp(3) cp(2) cp(3)/3 cp(4)/2];
-        end
+        location = get_color_bar_location(hc,option,xscale,yscale, ...
+                                           cxscale);
         set(hc,'Position',location,'FontSize',8)
     case 'off'
         if length(Z) > 1
             caxis([min(Z) max(Z)])
             hc=colorbar('Location','NorthOutside');
-            cp=get(hc,'Position');
-            if isfield(option,'checkSTATS')
-                % Taylor diagram
-                location = [cp(1)+0.8*cp(3) cp(2) cp(3)/3 cp(4)/2];
-            else
-                % target diagram
-                location = [cp(1)+cp(3) cp(2) cp(3)/3 cp(4)/2];
-            end
+            location = get_color_bar_location(hc,option,xscale,yscale, ...
+                                              cxscale);
             set(hc,'Position',location,...
                 'XTick',[min(Z) max(Z)], ...
                 'XTickLabel',{'Min. RMSD','Max. RMSD'},...
@@ -82,3 +77,50 @@ switch nargout
 end
 
 end %function plot_pattern_diagram_colorbar
+
+function location = get_color_bar_location(hc,option,xscale,yscale, ...
+                                           cxscale)
+%GET_COLOR_BAR_LOCATION Determine location for color bar.
+%
+%   location = GET_COLOR_BAR_LOCATION(HC,OPTION)
+%   Determines location to place color bar for type of plot:
+%   target diagram and Taylor diagram. Optional scale arguments
+%   (xscale,yscale,cxscale) can be supplied to adjust the placement of
+%   the colorbar to accommodate different situations, e.g. use in Octave
+%   versus Matlab.
+%
+%   INPUTS:
+%   hc      : handle returned by colorbar 
+%   option  : data structure containing option values.
+%   xscale  : scale factor to adjust x-position of color bar
+%   yscale  : scale factor to adjust y-position of color bar
+%   cxscale : scale factor to adjust thickness of color bar
+%
+%   OUTPUTS:
+% 	location : x, y, width, height for color bar
+
+% Check for optional arguments and set defaults if required
+if ~exist('xscale','var')
+    xscale = 1.0; yscale = 1.0; cxscale = 1.0;
+elseif ~exist('yscale','var')
+    yscale = 1.0; cxscale = 1.0;
+elseif ~exist('cxscale','var')
+    cxscale = 1.0;
+endif
+
+% Get current position of color bar
+cp=get(hc,'Position');
+
+% Calculate location    
+if isfield(option,'checkSTATS')
+    % Taylor diagram
+    location = [cp(1)+0.8*xscale*cp(3) yscale*cp(2) ...
+                cxscale*cp(3)/3 cp(4)/2];
+else
+    % target diagram
+    disp('target diagram') %debug
+    location = [cp(1)+xscale*cp(3) yscale*cp(2) ...
+                cxscale*cp(3)/3 cp(4)/2];
+endif
+
+end % function get_color_bar_location

@@ -28,7 +28,6 @@ axes.dx    = rho(1);
 hold off
 cax = gca;
 axes.tc = get(cax,'xcolor');
-ls = '-'; % DEFINE HERE THE GRID STYLE
 axes.next = lower(get(cax,'NextPlot'));
 
 % make a radial grid
@@ -39,7 +38,7 @@ else
 	maxrho = option.axismax;
 end
 hhh = line([-maxrho -maxrho maxrho maxrho],[-maxrho maxrho maxrho -maxrho],'parent',cax);
-set(cax,'dataaspectratio',[1 1 1],'plotboxaspectratiomode','auto')
+set(cax,'dataaspectratio',[1 1 1],'plotboxaspectratiomode','auto');
 v = [get(cax,'xlim') get(cax,'ylim')];
 ticks = sum(get(cax,'ytick')>=0);
 delete(hhh);
@@ -48,7 +47,7 @@ delete(hhh);
 axes.rmin = 0; 
 if ~isfield(option, 'axismax')
 	axes.rmax = v(4);
-    option.axismax = axes.rmax;
+  option.axismax = axes.rmax;
 else
 	axes.rmax = option.axismax;
 end

@@ -12,8 +12,7 @@ function [stats] = target_statistics(predicted,reference,field,norm)
 %   the name of the field must be supplied in FIELD.
 %
 %   The function currently supports only data structures for the PREDICTED 
-%   and REFERENCE variables, but will be extended to other variable types 
-%   in future.
+%   and REFERENCE variables.
 %
 %   Input:
 %   PREDICTED : predicted field

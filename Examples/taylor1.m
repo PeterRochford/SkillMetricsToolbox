@@ -67,6 +67,8 @@ ccoef = [taylor_stats1.ccoef(1); taylor_stats1.ccoef(2); ...
 % The other values are used to plot the points (total of 3) that appear in
 % the diagram.
 [hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef);
+%[hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef,'titleRMS','off',...
+%  'titleCOR','off');
 
 % Write plot to file
 writepng(gcf,'taylor1.png');

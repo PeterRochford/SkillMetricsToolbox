@@ -1,16 +1,16 @@
-% How to create a target diagram with labelled data points
+% How to create a target diagram with labeled data points
 %
 % A second example of how to create a target diagram given one set of
 % reference observations and multiple model predictions for the quantity.
 %
 % This example is a variation on the first example (target1) where now the
-% data points are labelled and axes properties are specified.
+% data points are labeled and axes properties are specified.
 %
 % All functions in the Skill Metrics Toolbox are designed to only work with
 % one-dimensional arrays, e.g. time series of observations at a selected
 % location. The one-dimensional data are read in as data structures via a
 % mat file. The latter are stored in data structures in the format:
-% ref.data, pred1.data, pred2.dat, and pred3.dat. The plot is written to a
+% ref.data, pred1.data, pred2.data, and pred3.data. The plot is written to a
 % file in Portable Network Graphics (PNG) format.
 %
 % The reference data used in this example are cell concentrations of a

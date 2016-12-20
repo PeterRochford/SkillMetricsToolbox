@@ -21,7 +21,7 @@ function varargout = plot_pattern_diagram_markers(X,Y,option)
 %
 %   OUTPUTS:
 % 	hp: returns handles of plotted points
-%	ht: returns handles of the text legend of points
+% 	ht: returns handles of the text legend of points
 
 if strcmp(option.markerLegend,'on')
     % Check that marker labels have been provided
@@ -76,10 +76,8 @@ if strcmp(option.markerLegend,'on')
     limit = option.axismax;
     hp = [];
     markerLabel = [];
-    nmarker = 0;
     for i=1:length(X)
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
-            nmarker = nmarker + 1;
             h = plot(X(i),Y(i),marker(i,:), ...
                 'MarkerSize',8,'MarkerFaceColor',marker(i,2), ...
                 'Linewidth',2.5);
@@ -91,7 +89,11 @@ if strcmp(option.markerLegend,'on')
     % Add legend
     if ~isempty(hp)
         if ~isempty(option.markerLabel)
+          if is_octave()
+            lhandle=legend(hp,markerLabel,'Location','northeast');
+          else
             lhandle=legend(hp,markerLabel,'Location','bestoutside');
+          end
         end
     else
         warning('No markers within axis limit ranges.');

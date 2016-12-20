@@ -29,7 +29,7 @@ function varargout = taylor_diagram(varargin)
 %   You can get it somewhere from: http://codes.guillaumemaze.org/matlab
 %
 % OUTPUTS:
-% 	hp: returns handles of plotted points
+% hp: returns handles of plotted points
 %	ht: returns handles of the text legend of points
 %	axl: returns a structure of handles of axis labels
 %
@@ -129,7 +129,8 @@ option = get_taylor_diagram_options(CORs,narg,varargin{:});
 
 % __ Check the input statistics if requested.
 if strcmp(option.checkSTATS,'on')
-    check_taylor_stats(STDs, RMSs, CORs,0.01);
+    last = length(STDs);
+    check_taylor_stats(STDs(2:last), RMSs(2:last), CORs(2:last), 0.02);
 end %checkStats
 
 % __ Express statistics in polar coordinates.
@@ -202,9 +203,9 @@ function [STDs, RMSs, CORs, narg] = get_taylor_diagram_arguments(varargin)
 %   varagin : variable-length input argument list
 %
 %   OUTPUTS:
-%	STDs: Standard deviations
-%	RMSs: Centered Root Mean Square Difference 
-%	CORs: Correlation
+%   STDs: Standard deviations
+%   RMSs: Centered Root Mean Square Difference 
+%   CORs: Correlation
 %   narg  : number of optional arguments
     
 STDs=[]; RMSs=[]; CORs=[]; narg = 0;
