@@ -1,7 +1,7 @@
 function b = bias_skill(predicted,reference)
 %BIAS Calculate the bias between two variables (B)
 %
-%   B = BIAS(PREDICTED,REFERENCE) calculates the bias between two variables 
+%   B = BIAS_SKILL(PREDICTED,REFERENCE) calculates the bias between two variables 
 %   PREDICTED and REFERENCE. The bias is calculated using the
 %   formula:
 %
