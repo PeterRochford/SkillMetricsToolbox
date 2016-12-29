@@ -52,9 +52,6 @@
 %         Acorn Science & Innovation, Inc.
 %         prochford@acornsi.com
 
-%ToDo: Delete file
-% C:\Octave\Octave-4.2.0\share\octave\packages\io-2.4.5\xmlwrite_save.m
-
 % Read in data from a mat file
 load('target_data.mat');
 
@@ -114,24 +111,20 @@ target_stats1 = target_statistics(pred1,ref,'data');
 % Write statistics to Excel file
 filename = [pwd '/target_stats.xlsx'];
 data = {target_stats1};
-%write_target_stats(filename,data,'overwrite','on');
+write_target_stats(filename,data,'overwrite','on');
 
 % Calculate statistics for Taylor diagram
 taylor_stats1 = taylor_statistics(pred1,ref,'data');
 taylor_stats2 = taylor_statistics(pred2,ref,'data');
 taylor_stats3 = taylor_statistics(pred3,ref,'data');
 
-% Check statistics for first set
-%ToDo: provide example call
-%check_taylor_stats(??)
-
 % Write statistics to Excel file
 filename = [pwd '/taylor_stats.xlsx'];
 data = {taylor_stats1, taylor_stats2, taylor_stats3};
 title = {'Expt. 1', 'Expt. 2', 'Expt. 3'};
 label = {'Observed', 'M1'};
-%write_taylor_stats(filename,data,'title',title,'label', label, ...
-%  'overwrite',true);
+write_taylor_stats(filename,data,'title',title,'label', label, ...
+  'overwrite',true);
 
 % Check statistics for Taylor diagram
 diff = check_taylor_stats(taylor_stats1.sdev, taylor_stats1.crmsd, ...
