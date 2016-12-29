@@ -9,8 +9,8 @@
 % >> doc 'Skill Metrics Toolbox'
 %
 % Author: Peter A. Rochford
-%         Acorn Science & Innovation
-%         prochford@acornsi.com
+%         Symplectic, LLC
+%         prochford@thesymplectic.com
 %
 % Files
 %   bias_skill                     - Calculate the bias between two variables (B) 
