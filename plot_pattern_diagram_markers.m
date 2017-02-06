@@ -42,7 +42,7 @@ if strcmp(option.markerLegend,'on')
     % displayed in a legend
     
     % Define markers
-    kind=['+';'o';'x';'s';'d';'^';'v';'p';'h';'*'];
+    kind=['+';'o';'x';'*';'d';'^';'v';'p';'h'];
     colorm=['b';'r';'g';'c';'m';'y';'k'];
     if (length(X) > 70)
         disp('You must introduce new markers to plot more than 70 cases.')
