@@ -1,17 +1,20 @@
-% How to create a Taylor diagram with labelled data points and modified axes
+% How to create a simple Taylor diagram that also shows the
+% observational standard deviation.
 %
-% A second example of how to create a Taylor diagram given one set of
+% A second example of how to create a simple Taylor diagram, given one set of
 % reference observations and multiple model predictions for the quantity.
 %
 % This example is a variation on the first example (taylor1) where now the
-% data points are labelled and axes properties are specified.
+% standard deviation of the observations is also shown.
 %
-% All functions in the Skill Metrics Toolbox are designed to only work with
-% one-dimensional arrays, e.g. time series of observations at a selected
-% location. The one-dimensional data are read in as data structures via a
-% mat file. The latter are stored in data structures in the format:
-% ref.data, pred1.data, pred2.dat, and pred3.dat. The plot is written to a
-% file in Portable Network Graphics (PNG) format.
+% This example shows how to calculate the required statistics and produce
+% the Taylor diagram. All functions in the Skill Metrics Toolbox are
+% designed to only work with one-dimensional arrays, e.g. time series of
+% observations at a selected location. The one-dimensional data are read in
+% as data structures via a mat file. The latter are stored in data
+% structures in the format: ref.data, pred1.data, pred2.dat, and
+% pred3.dat. The plot is written to a file in Portable Network Graphics
+% (PNG) format.
 %
 % The reference data used in this example are cell concentrations of a
 % phytoplankton collected from cruise surveys at selected locations and 
@@ -58,23 +61,16 @@ crmsd = [taylor_stats1.crmsd(1); taylor_stats1.crmsd(2); ...
 ccoef = [taylor_stats1.ccoef(1); taylor_stats1.ccoef(2); ...
     taylor_stats2.ccoef(2); taylor_stats3.ccoef(2)];
 
-% Specify labels for points in a cell array (M1 for model prediction 1,
-% etc.). Note that a label needs to be specified for the reference even
-% though it is not used.
-label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
-
-% Produce the Taylor diagram
+% Produce the Taylor diagram.
 %
-% Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
-%
-% For an exhaustive list of options to customize your diagram, please 
-% call the function without arguments:
-%	>> taylor_diagram
-[hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef, ...
-    'markerLabel',label, ...
-    'tickRMS',0.0:20.0:40.0, ...
-    'tickSTD',0.0:5.0:50.0, ...
-    'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0]);
+% Note that the first index corresponds to the reference series for the
+% diagram. For example sdev(1) is the standard deviation of the reference
+% series and sdev(2:4) are the standard deviations of the other series.
+% The value of sdev(1) is used to define the origin of the RMSD contours.
+% The other values are used to plot the points (total of 3) that appear in
+% the diagram.
+[hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef,'styleOBS','-', ...
+    'colOBS','r','markerobs','o','titleOBS','observation');
 
 % Write plot to file
 writepng(gcf,'taylor2.png');

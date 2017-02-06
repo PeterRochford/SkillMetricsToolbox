@@ -1,12 +1,15 @@
-% How to create a Taylor diagram with with modified axes and data point colors
+% How to create a taylor diagram with overlaid markers
 %
-% A fourth example of how to create a Taylor diagram given one set of
-% reference observations and multiple model predictions for the quantity.
+% An eighth example of how to create a Taylor diagram given one set
+% of reference observations and multiple model predictions for the
+% quantity.
 %
-% This example is a variation on the third example (taylor3) where now the
-% maximum scale for the standard deviation axis is increased, color
-% properties are modified for the data points, and color & style properties
-% are modified for the axes.
+% This example is a variation on the seventh example (taylor7) where now a
+% fourth data point having a negative correlation is overlaid on an
+% existing Taylor diagram that already has 3 data points with positive
+% correlations. It is chosen to have data points with positive correlations
+% appear in red while data points with negative correlations are displayed
+% in blue.  
 %
 % All functions in the Skill Metrics Toolbox are designed to only work with
 % one-dimensional arrays, e.g. time series of observations at a selected
@@ -47,7 +50,7 @@ load('taylor_data.mat');
 
 % Calculate statistics for Taylor diagram
 % The first array element corresponds to the reference series for the
-% while the second is that for the predicted series.
+% while the second is that for the predicted series. 
 taylor_stats1 = taylor_statistics(pred1,ref,'data');
 taylor_stats2 = taylor_statistics(pred2,ref,'data');
 taylor_stats3 = taylor_statistics(pred3,ref,'data');
@@ -65,24 +68,39 @@ ccoef = [taylor_stats1.ccoef(1); taylor_stats1.ccoef(2); ...
 % though it is not used.
 label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
 
-% Produce the Taylor diagram
+% Produce the Taylor diagram.
 %
-% Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
-% Increase the upper limit for the SDEV axis and rotate the CRMSD contour 
-% labels (counter-clockwise from x-axis). Exchange color and line style
-% choices for SDEV, CRMSD, and CCOEFF variables to show effect. Increase
-% the line width of all lines.
+% Display the data points for correlations that vary from -1 to 1 (2
+% panels). Label the points and change the axis options for SDEV, CRMSD,
+% and CCOEF. Increase the upper limit for the SDEV axis and rotate the
+% CRMSD contour labels (counter-clockwise from x-axis). Exchange color and
+% line style choices for SDEV, CRMSD, and CCOEFF variables to show effect.
+% Increase the line width of all lines.
 %
 % For an exhaustive list of options to customize your diagram, please 
 % call the function without arguments:
 %	>> taylor_diagram
 [hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef, ...
+    'numberPanels', 2, ...
     'markerLabel',label, 'markerLabelColor', 'r', ...
-    'tickRMS',0.0:10.0:50.0,'tickRMSangle',110.0, ...
-    'colRMS','m', 'styleRMS', ':', 'widthRMS', 2.0, ...
+    'tickRMS',0.0:10.0:80.0,'tickRMSangle',150.0, ...
+    'colRMS','m', 'styleRMS', ':', 'widthRMS', 2.0, 'titleRMS', 'off', ...
     'tickSTD',0.0:20.0:60.0, 'limSTD',60.0, ...
     'colSTD','b', 'styleSTD', '-.', 'widthSTD', 1.0, ...
     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
 
+% Calculate a negative correlation for one of the data values.
+pred3.data = -pred3.data;
+taylor_stats3 = taylor_statistics(pred3,ref,'data');
+sdev = [taylor_stats3.sdev(1); taylor_stats3.sdev(2)];
+crmsd = [taylor_stats3.crmsd(1); taylor_stats3.crmsd(2)];
+ccoef = [taylor_stats1.ccoef(1); taylor_stats3.ccoef(2)];
+
+% Overlay new data point (blue) on existing diagram
+label = {'Non-Dimensional Observation', 'M4'};
+taylor_diagram(sdev,crmsd,ccoef, ...
+    'overlay','on', ...
+    'markerLabel',label, 'markerLabelColor', 'b', 'markerColor','b');
+
 % Write plot to file
-writepng(gcf,'taylor3.png');
+writepng(gcf,'taylor7.png');

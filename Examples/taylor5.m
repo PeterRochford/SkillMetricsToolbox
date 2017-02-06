@@ -1,12 +1,11 @@
-% How to create a Taylor diagram with a color bar
+% How to create a Taylor diagram with a legend plus suppressed axes titles
 %
 % A fifth example of how to create a Taylor diagram given one set of
 % reference observations and multiple model predictions for the quantity.
 %
-% This example is a variation on the third example (taylor3) where now the
-% markers are displayed in a color spectrum corresponding to their RMSD. A
-% color bar is automatically displayed showing the correspondence with the
-% RMSD values.
+% This example is a variation on the fourth example (taylor4) where now a
+% legend is added, and axes titles are suppressed. Note that symbols are
+% used for the points when requesting a legend.
 %
 % All functions in the Skill Metrics Toolbox are designed to only work with
 % one-dimensional arrays, e.g. time series of observations at a selected
@@ -71,19 +70,18 @@ label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
 % Increase the upper limit for the SDEV axis and rotate the CRMSD contour 
 % labels (counter-clockwise from x-axis). Exchange color and line style
 % choices for SDEV, CRMSD, and CCOEFF variables to show effect. Increase
-% the line width of all lines.
+% the line width of all lines. Suppress axes titles and add a legend.
 %
 % For an exhaustive list of options to customize your diagram, please 
 % call the function without arguments:
 %	>> taylor_diagram
 [hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef, ...
-    'markerDisplayed','colorBar', 'titleColorbar', 'RMSD', ...
-    'nonRMSDz', 'on', ...
+    'markerLabel',label, 'markerColor', 'r', 'markerLegend', 'on', ...
     'tickRMS',0.0:10.0:50.0,'tickRMSangle',110.0, ...
-    'colRMS','m', 'styleRMS', ':', 'widthRMS', 2.0, ...
+    'colRMS','m', 'styleRMS', ':', 'widthRMS', 2.0, 'titleRMS', 'off', ...
     'tickSTD',0.0:20.0:60.0, 'limSTD',60.0, ...
-    'colSTD','b', 'styleSTD', '-.', 'widthSTD', 1.0, ...
-    'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+    'colSTD','b', 'styleSTD', '-.', 'widthSTD', 1.0, 'titleSTD', 'off', ...
+    'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0, 'titleCOR', 'off');
 
 % Write plot to file
-writepng(gcf,'taylor5.png');
+writepng(gcf,'taylor4.png');

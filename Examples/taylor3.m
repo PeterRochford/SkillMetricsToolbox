@@ -1,12 +1,10 @@
-% How to create a Taylor diagram with with modified axes and data point colors
+% How to create a Taylor diagram with labelled data points and modified axes
 %
 % A third example of how to create a Taylor diagram given one set of
 % reference observations and multiple model predictions for the quantity.
 %
-% This example is a variation on the second example (taylor2) where now the
-% maximum scale for the standard deviation axis is increased, color
-% properties are modified for the data points, and color & style properties
-% are modified for the axes.
+% This example is a variation on the first example (taylor1) where now the
+% data points are labelled and axes properties are specified.
 %
 % All functions in the Skill Metrics Toolbox are designed to only work with
 % one-dimensional arrays, e.g. time series of observations at a selected
@@ -68,21 +66,15 @@ label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
 % Produce the Taylor diagram
 %
 % Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
-% Increase the upper limit for the SDEV axis and rotate the CRMSD contour 
-% labels (counter-clockwise from x-axis). Exchange color and line style
-% choices for SDEV, CRMSD, and CCOEFF variables to show effect. Increase
-% the line width of all lines.
 %
 % For an exhaustive list of options to customize your diagram, please 
 % call the function without arguments:
 %	>> taylor_diagram
 [hp, ht, axl] = taylor_diagram(sdev,crmsd,ccoef, ...
-    'markerLabel',label, 'markerLabelColor', 'r', ...
-    'tickRMS',0.0:10.0:50.0,'tickRMSangle',110.0, ...
-    'colRMS','m', 'styleRMS', ':', 'widthRMS', 2.0, ...
-    'tickSTD',0.0:20.0:60.0, 'limSTD',60.0, ...
-    'colSTD','b', 'styleSTD', '-.', 'widthSTD', 1.0, ...
-    'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+    'markerLabel',label, ...
+    'tickRMS',0.0:20.0:40.0, ...
+    'tickSTD',0.0:5.0:50.0, ...
+    'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0]);
 
 % Write plot to file
-writepng(gcf,'taylor3.png');
+writepng(gcf,'taylor2.png');
