@@ -66,8 +66,8 @@ function varargout = taylor_diagram(varargin)
 %     in a single diagram, J. Geophys. Res., 106(D7), 7183–7192, 
 %     doi:10.1029/2000JD900719.
 
-% Rev. by Peter Rochford on 2015-04-13:
-%   This is major rewriting of the taylordiag function originally written
+% Rev. by Peter Rochford on 2017-02-02:
+%   This is a major rewriting of the taylordiag function originally written
 %   by Guillaume Maze and therefore renamed as taylor_diagram to make it
 %   distinct. The main new capabilities are summarized below.
 %
@@ -90,6 +90,9 @@ function varargout = taylor_diagram(varargin)
 %   6) Added options for displaying markers represented by individual
 %      symbols, a legend option, and color coded markers based on RMSD 
 %      value along with a color bar.
+%
+%   7) Added options for displaying observation STD on the axis, a label for the 
+%      point, and a circle.
 %
 % Rev. by Guillaume Maze on 2010-02-10: Help more helpful ! Options now 
 %   displayed by call.
@@ -149,9 +152,14 @@ if strcmp(option.overlay,'off')
     
     % __ Plot axes for Taylor diagram
     ax = plot_taylor_axes(axes,cax,option);
+    
+    % __ Plot marker on axis indicating observation STD
+    plot_taylor_obs(ax,STDs(1),axes,option);
 end % no overlay
 
-% __ Plot data points. Note that only rho(2:N) and theta(2:N) are plotted.
+% __ Plot data points. Note that only rho(2:N) and theta(2:N) are plotted
+%    in the figure as rho(1) and theta(1) indicate the observed standard
+%    deviation point.
 X = rho(2:end).*cos(theta(2:end));
 Y = rho(2:end).*sin(theta(2:end));
 hold on
@@ -246,7 +254,7 @@ function display_taylor_diagram_options
 disp('General options:')
 dispopt('''numberPanels''',sprintf(['1 or 2: Panels to display (1 for positive ' ...
     'correlations, 2 for positive and negative correlations).' ...
-    '\n\t\tDefault value depends on correlations (CORs)']));
+    '\n\t\tDefault value depends on correlations (CORs).']));
 dispopt('''overlay''',sprintf(['''on'' / ''off'' (default): ' ...
     'Switch to overlay current statistics on Taylor diagram. ' ...
     '\n\t\tOnly markers will be displayed.']));
@@ -274,7 +282,7 @@ dispopt('''tickRMS''','RMS values to plot gridding circles from observation poin
 dispopt('''colRMS''','RMS grid and tick labels color. (Default: green)');
 dispopt('''showlabelsRMS''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show the RMS tick labels']));
-dispopt('''tickRMSangle''','Angle for RMS tick labels with the observation point. Default: 135 deg.');
+dispopt('''tickRMSangle''','Angle for RMS tick labels with the observation point. (Default: 135 deg.)');
 dispopt('''styleRMS''','Linestyle of the RMS grid');
 dispopt('''widthRMS''','Line width of the RMS grid');
 dispopt('''titleRMS''',sprintf(['''on'' (default) / ''off'': ' ...
@@ -293,13 +301,20 @@ dispopt('''limSTD''','Max of the STD axis (radius of the largest circle)');
 
 disp('CORRELATION axis options:')
 dispopt('''tickCOR''','CORRELATON grid values');
-dispopt('''colCOR''','CORRELATION grid color. Default: blue');
+dispopt('''colCOR''','CORRELATION grid color. (Default: blue)');
 dispopt('''showlabelsCOR''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show the CORRELATION tick labels']));
 dispopt('''styleCOR''','Linestyle of the COR grid');
 dispopt('''widthCOR''','Line width of the COR grid');
 dispopt('''titleCOR''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show CORRELATION axis title']));
+
+disp('Observation STD options:')
+dispopt('''colOBS''','Observation STD color. (Default: magenta)');
+dispopt('''markerObs''','Marker for observation STD point on axis. (Default: none)');
+dispopt('''styleOBS''','Linestyle of the observation STD circle');
+dispopt('''widthOBS''','Line width of the observation STD circle');
+dispopt('''titleOBS''','Label for observation STD point on axis');
 
 disp('CONTROL options:')
 dispopt('''checkStats''',sprintf(['''on'' / ''off'' (default): ' ...

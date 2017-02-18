@@ -20,21 +20,27 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                       (Default : 'off')
 %
 %   option.colCOR      : color for correlation coefficient labels (Default : blue)
+%   option.colOBS      : color for observation labels (Default : magenta)
 %   option.colRMS      : color for RMS labels (Default : medium green)
 %   option.colSTD      : color for STD labels (Default : black)
 %
 %   option.colormap    : 'on'/'off' switch to map color shading of
-%     markers to colormap ('on') or min to max range of RMSDz values
-%     ('off'). Set to same value as option.nonRMSDs.
+%                        markers to colormap ('on') or min to max range of 
+%                        RMSDz values('off'). Set to same value as 
+%                        option.nonRMSDs.
 %
-%   option.markerDisplayed : markers to use for individual experiments
 %   option.markerColor     : single color to use for all markers (Default: red)
+%   option.markerDisplayed : markers to use for individual experiments
 %   option.markerLabel     : name of the experiment to use for marker
 %   option.markerLabelColor: marker label color (Default 'k')
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
+%   option.markerObs       : marker to use for x-axis indicating observed STD
+%                            A choice of 'none' will suppress appearance of
+%                            marker. (Default 'none')
 %
 %   option.nonRMSDz        : 'on'/'off' switch indicating values in RMSDs 
-%     do not correspond to total RMS Differences. (Default 'off')
+%                            do not correspond to total RMS Differences.
+%                            (Default 'off')
 %   option.numberPanels    : Number of panels to display
 %                            = 1 for positive correlations
 %                            = 2 for positive and negative correlations
@@ -53,10 +59,13 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %
 %   option.styleCOR        : line style for correlation coefficient grid 
 %                            lines (Default: dash-dot '-.')
+%   option.styleOBS        : line style for observation grid line. A choice of
+%                            empty string '' will suppress appearance of the
+%                            grid line (Default: '')
 %   option.styleRMS        : line style for RMS grid lines 
-%                            (Default: dash-dot '--')
+%                            (Default: dash '--')
 %   option.styleSTD        : line style for STD grid lines 
-%                            (Default: dash-dot '--')
+%                            (Default: dotted ':')
 %
 %   option.tickCOR(:).val  : tick values for correlation coefficients for
 %                            two types of panels
@@ -69,11 +78,13 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.titleColorBar   : title for the colorbar
 %   option.titleCOR        : show correlation coefficient axis label 
 %                            (Default: 'on')
+%   option.titleOBS        : label for observation point (Default: '')
 %   option.titleRMS        : show RMS axis label (Default: 'on')
 %   option.titleSTD        : show STD axis label (Default: 'on')
 %
 %   option.widthCOR        : linewidth for correlation coefficient grid 
 %                            lines (Default: .8)
+%   option.widthOBS        : linewidth for observation grid line (Default: .8)
 %   option.widthRMS        : linewidth for RMS grid lines (Default: .8)
 %   option.widthSTD        : linewidth for STD grid lines (Default: .8)
 
@@ -85,27 +96,32 @@ else
 end
 option.checkSTATS = 'off';
 option.colCOR = [0 0 1];
+option.colOBS = 'm';
 option.colRMS = [0 .6 0];
 option.colSTD = [0 0 0];
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
 option.markerLegend = 'off';
+option.markerObs = 'none';
 option.nonRMSDz = 'off';
 option.overlay = 'off';
 option.showlabelsCOR = 'on';
 option.showlabelsRMS = 'on';
 option.showlabelsSTD = 'on';
 option.styleCOR = '-.';
+option.styleOBS = '';
 option.styleRMS = '--';
 option.styleSTD = ':';
 option.tickCOR(1).val = [1 .99 .95 .9:-.1:0];
 option.tickCOR(2).val = [1 .99 .95 .9:-.1:0 -.1:-.1:-.9 -.95 -.99 -1];
 option.tickRMSangle  = 135;	
 option.titleCOR = 'on';
+option.titleOBS = '';
 option.titleRMS = 'on';
 option.titleSTD = 'on';
 option.widthCOR = .8;
+option.widthOBS = .8;
 option.widthRMS = .8;
 option.widthSTD = .8;
 
@@ -120,6 +136,8 @@ for iopt = 4 : 2 : narg+3
           option.checkSTATS = check_on_off(option.checkSTATS);
     case 'colcor'
          option.colCOR = optvalue;
+    case 'colobs'
+         option.colOBS = optvalue;
     case 'colrms'
          option.colRMS = optvalue;
     case 'colstd'
@@ -138,6 +156,8 @@ for iopt = 4 : 2 : narg+3
     case 'markerlegend'
         option.markerLegend=optvalue;
         check_on_off(option.markerLegend);
+    case 'markerobs'
+        option.markerObs=optvalue;
     case 'nonrmsdz'
         option.nonRMSDz=optvalue;
         check_on_off(option.nonRMSDz);
@@ -157,6 +177,8 @@ for iopt = 4 : 2 : narg+3
             check_on_off(option.showlabelsSTD);
     case 'stylecor'
       option.styleCOR = optvalue;
+    case 'styleobs'
+      option.styleOBS = optvalue;
     case 'stylerms'
       option.styleRMS = optvalue;
     case 'stylestd'
@@ -178,6 +200,8 @@ for iopt = 4 : 2 : narg+3
     case 'titlecor'
       option.titleCOR = optvalue;
       check_on_off(option.titleCOR);
+    case 'titleobs'
+      option.titleOBS = optvalue;
     case 'titlerms'
       option.titleRMS = optvalue;
       check_on_off(option.titleRMS);
@@ -186,6 +210,8 @@ for iopt = 4 : 2 : narg+3
       check_on_off(option.titleSTD);
     case 'widthcor'
       option.widthCOR = optvalue;
+    case 'widthobs'
+      option.widthOBS = optvalue;
     case 'widthrms'
       option.widthRMS = optvalue;
     case 'widthstd'
