@@ -118,7 +118,6 @@ if isfield(option,'checkSTATS')
                 cxscale*cp(3)/3 cp(4)/2];
 else
     % target diagram
-    disp('target diagram') %debug
     location = [cp(1)+xscale*cp(3) yscale*cp(2) ...
                 cxscale*cp(3)/3 cp(4)/2];
 endif
