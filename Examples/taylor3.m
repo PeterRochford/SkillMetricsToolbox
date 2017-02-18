@@ -33,9 +33,9 @@
 %          jday: [57x1 double]
 
 % Author: Peter A. Rochford
-%         CSS-Dynamac (Contractor)
-%         NOAA/NOS/NCCOS/CCMA/COAST
-%         peter.rochford@noaa.gov
+%         Symplectic, LLC
+%         www.thesymplectic.com
+%         prochford@thesymplectic.com
 
 % Close any previously open graphics windows
 close all;
@@ -77,4 +77,4 @@ label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
     'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0]);
 
 % Write plot to file
-writepng(gcf,'taylor2.png');
+writepng(gcf,'taylor3.png');

@@ -48,9 +48,9 @@
 % }
 
 % Author: Peter A. Rochford
-%         CSS-Dynamac (Contractor)
-%         Acorn Science & Innovation, Inc.
-%         prochford@acornsi.com
+%         Symplectic, LLC
+%         www.thesymplectic.com
+%         prochford@thesymplectic.com
 
 % Read in data from a mat file
 load('target_data.mat');
