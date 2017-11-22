@@ -16,22 +16,28 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   OUTPUTS:
 %   option : data structure containing option values. (Refer to 
 %     display_target_diagram_options function for more information.)
+%   option.alpha           : blending of symbol face color (0.0
+%                            transparent through 1.0 opaque). (Default : 1.0)
 %   option.axismax         : maximum for the Bias & uRMSD axis
 %   option.circleLineSpec  : circle line specification (default dashed 
 %                            black, '--k')
-%   option.circleLineWidth : circle line width specification (default 0.5)
+%   option.circleLineWidth : circle line width specification (default 1.5)
 %   option.circles         : radii of circles to draw to indicate 
-%     isopleths of standard deviation
+%                            isopleths of standard deviation
 %   option.colormap        : 'on'/'off' switch to map color shading of
 %                            markers to colormap ('on') or min to max range
 %                            of RMSDz values ('off'). Set to same value as
 %                            option.nonRMSDz. 
 %   option.equalAxes       : 'on'/'off' switch to set axes to be equal
+%                            (default 'on')
+%
 %   option.markerLabelColor : marker label color (Default 'k')
 %   option.markerdisplayed : markers to use for individual experiments
 %   option.markerLabel     : name of the experiment to use for marker
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
 %                            (Default 'off')
+%   option.markerSize      : marker size (Default 12)
+%
 %   option.nonRMSDz        : 'on'/'off' switch indicating values in RMSDz 
 %     do not correspond to total RMS Differences. (Default 'off')
 %   option.normalized      : statistics supplied are normalized with 
@@ -50,13 +56,15 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   option.titleColorBar   : title for the colorbar
 
 % Set default parameters
+option.alpha = 1.0;
 option.circleLineSpec = '--k';
-option.circleLineWidth = 0.5;
+option.circleLineWidth = 1.5;
 option.equalAxes = 'on';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
 option.markerLegend = 'off';
+option.markerSize = 10;
 option.nonRMSDz = 'off';
 option.normalized = 'off';
 option.obsUncertainty = 0.0;
@@ -68,6 +76,8 @@ for iopt = 4 : 2 : narg+3
     optname  = varargin{iopt};
     optvalue = varargin{iopt+1};
     switch lower(optname)
+        case 'alpha'
+            option.alpha = optvalue;
         case 'circlelinespec'
             option.circleLineSpec=optvalue;
         case 'circlelinewidth'
@@ -90,6 +100,8 @@ for iopt = 4 : 2 : narg+3
         case 'markerlegend'
             option.markerLegend=optvalue;
             check_on_off(option.markerLegend);
+        case 'markersize'
+            option.markerSize=optvalue;
         case 'nonrmsdz'
             option.nonRMSDz=optvalue;
             check_on_off(option.nonRMSDz);

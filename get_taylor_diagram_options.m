@@ -15,7 +15,9 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %
 %   OUTPUTS:
 %   option            : data structure containing option values.
-%   option.axismax    : Max of the STD axis (radius of the largest circle)
+%   option.alpha      : blending of symbol face color (0.0 transparent
+%                       through 1.0 opaque). (Default : 1.0)
+%   option.axismax    : maximum for the radial contours
 %   option.checkSTATS : Check input statistics satisfy Taylor relationship
 %                       (Default : 'off')
 %
@@ -37,6 +39,7 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.markerObs       : marker to use for x-axis indicating observed STD
 %                            A choice of 'none' will suppress appearance of
 %                            marker. (Default 'none')
+%   option.markerSize      : marker size (Default 10)
 %
 %   option.nonRMSDz        : 'on'/'off' switch indicating values in RMSDs 
 %                            do not correspond to total RMS Differences.
@@ -51,6 +54,8 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                            Only markers will be displayed.
 %   option.rincRMS         : axis tick increment for RMS values
 %   option.rincSTD         : axis tick increment for STD values
+%   option.rmslabelformat  : string format for RMS contour labels, e.g. '0:.2f'.
+%                            (Default '0', format as specified by str function)
 %
 %   option.showlabelsCOR   : show correlation coefficient labels 
 %                            (Default: 'on')
@@ -70,9 +75,9 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.tickCOR(:).val  : tick values for correlation coefficients for
 %                            two types of panels
 %   option.tickCOR         : CORRELATON grid values
-%   option.tickRMS         : RMS values to plot gridding circles from
+%   option.tickRMS         : RMS values to plot grid circles from
 %                            observation point 
-%   option.tickSTD         : STD values to plot gridding circles from
+%   option.tickSTD         : STD values to plot grid circles from
 %                            origin 
 %   option.tickRMSangle    : tick RMS angle (Default: 135 degrees)
 %   option.titleColorBar   : title for the colorbar
@@ -94,6 +99,7 @@ if find(CORs<0)
 else
 	option.numberPanels = 1;
 end
+option.alpha = 1.0;
 option.checkSTATS = 'off';
 option.colCOR = [0 0 1];
 option.colOBS = 'm';
@@ -104,8 +110,10 @@ option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
 option.markerLegend = 'off';
 option.markerObs = 'none';
+option.markerSize = 10;
 option.nonRMSDz = 'off';
 option.overlay = 'off';
+option.rmslabelformat = '%.f';
 option.showlabelsCOR = 'on';
 option.showlabelsRMS = 'on';
 option.showlabelsSTD = 'on';
@@ -131,6 +139,8 @@ for iopt = 4 : 2 : narg+3
     optname  = varargin{iopt};
     optvalue = varargin{iopt+1};
 	switch lower(optname)
+    case 'alpha'
+         option.alpha = optvalue;
     case 'checkstats'
           option.checkSTATS = optvalue;
           option.checkSTATS = check_on_off(option.checkSTATS);
@@ -158,6 +168,8 @@ for iopt = 4 : 2 : narg+3
         check_on_off(option.markerLegend);
     case 'markerobs'
         option.markerObs=optvalue;
+    case 'markersize'
+        option.markerSize=optvalue;
     case 'nonrmsdz'
         option.nonRMSDz=optvalue;
         check_on_off(option.nonRMSDz);
@@ -166,6 +178,13 @@ for iopt = 4 : 2 : narg+3
     case 'overlay'
         option.overlay=optvalue;
         check_on_off(option.overlay);
+    case 'rmslabelformat'
+        % Check for valid string format
+        valid = check_format(optvalue);
+        if ~valid
+          error(['Invalid string format for rmslabelformat: ' optvalue]);
+        end
+        option.rmslabelformat = optvalue;
     case 'showlabelscor'
         option.showlabelsCOR = optvalue;
         check_on_off(option.showlabelsCOR);
@@ -228,3 +247,33 @@ if strcmp(option.nonRMSDz,'on')
 end
 
 end %function get_taylor_diagram_options
+
+function valid = check_format(string)
+%CHECK_FORMAT(STRING)
+%   Checks the input string is a valid format for sprintf
+%
+%   CHECK_FORMAT(STRING) is a support function for the 
+%   GET_TAYLOR_DIAGRAM_OPTIONS function. It checks for a valid sprintf format
+%   for displaying contour values.
+  valid = false;
+  
+  if string(1) ~= '%'
+    % Not a format specifier
+    return;
+  end
+
+  index = regexp(string,'[diufeEgG]{1}');
+  if length(index) ~= 1 || index ~= length(string)
+    % Invalid conversion character
+    return
+  end
+
+  if length(string) > 2
+    number = str2num(string(2:length(string)-1));
+    if length(number) == 0
+      return
+    end
+  end
+
+  valid = true;
+end

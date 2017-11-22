@@ -23,6 +23,14 @@ function varargout = plot_pattern_diagram_markers(X,Y,option)
 % 	hp: returns handles of plotted points
 % 	ht: returns handles of the text legend of points
 
+
+% Set face color transparency
+alpha = option.alpha;
+
+% Set marker size
+fontSize = get(gcf,'DefaultAxesFontSize');
+markerSize = option.markerSize;
+
 if strcmp(option.markerLegend,'on')
     % Check that marker labels have been provided
     if ~isfield(option,'markerLabel')
@@ -42,7 +50,7 @@ if strcmp(option.markerLegend,'on')
     % displayed in a legend
     
     % Define markers
-    kind=['+';'o';'x';'*';'d';'^';'v';'p';'h'];
+    kind=['+';'o';'x';'s';'d';'^';'v';'p';'*'];
     colorm=['b';'r';'g';'c';'m';'y';'k'];
     if (length(X) > 70)
         disp('You must introduce new markers to plot more than 70 cases.')
@@ -76,13 +84,18 @@ if strcmp(option.markerLegend,'on')
     limit = option.axismax;
     hp = [];
     markerLabel = [];
+    hMarker = [];
+    lMarker = [];
     for i=1:length(X)
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
-            h = plot(X(i),Y(i),marker(i,:), ...
-                'MarkerSize',8,'MarkerFaceColor',marker(i,2), ...
+            h = plot(X(i),Y(i),marker(i,:),'MarkerSize',markerSize, ...
+                'MarkerEdgeColor',marker(i,2), ...
                 'Linewidth',2.5);
+            hm = setMarkerColor(h,marker(i,2),alpha); % Apply transparency to marker
             hp = [hp; h];
             markerLabel = [markerLabel; option.markerLabel(:,i)];
+            hMarker = [hMarker; hm];
+            lMarker = [lMarker; marker(i,2)];
         end
     end
     
@@ -90,9 +103,15 @@ if strcmp(option.markerLegend,'on')
     if ~isempty(hp)
         if ~isempty(option.markerLabel)
           if is_octave()
-            lhandle=legend(hp,markerLabel,'Location','northeast');
+            hLegend=legend(hp,markerLabel,'Location','northeast');
           else
-            lhandle=legend(hp,markerLabel,'Location','bestoutside');
+%            hLegend=legend(hp,markerLabel,'Location','best');
+            hLegend=legend(hp,markerLabel,'Location',[0.7 0.7 0.05 0.1]);
+
+            % The legend function clears marker customizations such as
+            % transparency, so restore transparency by re-updating
+            % hMarker.FaceColorData
+            legendMarkers(hp,hLegend,lMarker,alpha)
           end
         end
     else
@@ -118,7 +137,7 @@ else
         markerLabel = 0;
     end
     
-    % Plot markers as dots of a single color with accompanying labels
+    % Plot markers as circles of a single color with accompanying labels
     % and no legend
     
     % Plot markers at data points
@@ -128,8 +147,10 @@ else
     for i=1:length(X)
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
             % Plot marker
-            h = plot(X(i),Y(i),'.','MarkerSize',20, ...
-                'Color',option.markerColor);
+            h = plot(X(i),Y(i),'o','MarkerSize',markerSize, ...
+                'MarkerEdgeColor',option.markerColor, ...
+                'Linewidth',2.5);
+            setMarkerColor(h,option.markerColor,alpha); % Apply transparency to marker
             hp = [hp; h];
             
             if markerLabel
@@ -155,7 +176,7 @@ else
         end
     end
   	set(ht,'verticalalignment','bottom','horizontalalignment','right', ...
-        'fontsize',12)
+        'fontsize',fontSize)
 end
 
 % Output
@@ -168,3 +189,58 @@ switch nargout
 end
 
 end %function plot_pattern_diagram_markers
+
+function legendMarkers(handle,hLegend,lMarker,alpha)
+%legendMarkers Apply color & transparency to legend markers
+%
+%   The legend function clears marker customizations such as
+%   transparency, so restore transparency by re-updating the
+%   markers. Also apply transparency to the symbols appearing
+%   in the legend.
+%
+%   LEGENDMARKERS(HANDLE,HLEGEND,LMARKER,ALPHA)
+%
+%   INPUTS:
+%   handle  : handle of plot
+%   hLegend : handle of legend
+%   lMarker : list of marker symbols
+%   alpha   : blending of symbol face color (0.0 transparent through 
+%             1.0 opaque). (Default : 1.0)
+%
+%   OUTPUTS:
+% 	None
+
+% Test for empty arrays
+if length(handle) == 0 || length(hLegend) == 0 || length(lMarker) == 0
+    error('handle is empty array');
+elseif length(hLegend) == 0
+    error('hLegend is empty array');
+elseif length(lMarker) == 0
+    error('lMarker is empty array');
+elseif length(handle) ~= length(lMarker)
+    error('handle and lMarker arrays must be same size');
+end
+
+% Necessary to do a drawnow before operating on the legend structure
+drawnow;
+
+% Process for all markers
+for i=1:length(lMarker)
+    % Restore marker transparency
+    setMarkerColor(handle(i),lMarker(i),alpha);
+
+    % Get legend components
+    % hLegendComponents has 2 children: child 1 = LegendIcon, child 2 = Text (label)
+    hLegendComponents = hLegend.EntryContainer.Children;
+    for isymbol = 1:length(hLegendComponents)
+        hLegendIconComponents = hLegendComponents(isymbol).Icon.Transform.Children;
+
+        % child 1 = Marker, child 2 = LineStrip
+        hLegendMarker = hLegendIconComponents.Children(1);
+
+        % Set legend to same transparency as marker
+        setMarkerColor(hLegendMarker,lMarker(i),alpha); % Apply transparency to marker
+    end
+end
+end %function legendMarkers
+

@@ -63,7 +63,7 @@ function varargout = taylor_diagram(varargin)
 %   REFERENCE:
 %
 %   Taylor, K. E. (2001) Summarizing multiple aspects of model performance
-%     in a single diagram, J. Geophys. Res., 106(D7), 7183–7192, 
+%     in a single diagram, J. Geophys. Res., 106(D7), 7183ï¿½7192, 
 %     doi:10.1029/2000JD900719.
 
 % Rev. by Peter Rochford on 2017-02-02:
@@ -258,6 +258,13 @@ dispopt('''numberPanels''',sprintf(['1 or 2: Panels to display (1 for positive '
 dispopt('''overlay''',sprintf(['''on'' / ''off'' (default): ' ...
     'Switch to overlay current statistics on Taylor diagram. ' ...
     '\n\t\tOnly markers will be displayed.']));
+dispopt('''alpha''',sprintf(['Blending of symbol face color (0.0 transparent ' ...
+    'through 1.0 opaque)\n\t\t' ...
+    '(Default: 1.0)']));
+dispopt('''colormap''',sprintf(['''on'' / ''off'' (default): ' ...
+    'Switch to map color shading of markers to colormap ("on")\n\t\t' ...
+    'or min to max range of RMSDz values ("off").\n\t\t' ...
+    'Set to same value as option "nonRMSDz".']));
 
 disp('Marker options:')
 dispopt('''MarkerDisplayed''',sprintf([... 
@@ -271,48 +278,58 @@ dispopt('''markerColor''',sprintf(['Single color to use for all markers' ...
     ' (Default: red)']));
 dispopt('''markerLegend''',sprintf(['''on'' / ''off'' (default): ' ...
     'Use legend for markers']));
+dispopt('''markerSize''','Marker size (Default: 10)');
 disp('OPTIONS when ''MarkerDisplayed'' == ''colorbar''');
 dispopt('''nonRMSDz''',sprintf(['''on''/ ''off'' (default): ' ... 
     'Values in RMSDz do not correspond to total RMS Differences.\n\t\t' ...
     '(Used to make range of RMSDz values appear above color bar.)']));
-dispopt('''titleColorBar''',sprintf(['Title of the colorbar.']));
+dispopt('''titleColorBar''','Title of the colorbar.');
 
 disp('RMS axis options:')
-dispopt('''tickRMS''','RMS values to plot gridding circles from observation point');
+dispopt('''tickRMS''','RMS values to plot grid circles from observation point');
+dispopt('''rincRMS''','axis tick increment for RMS values');
 dispopt('''colRMS''','RMS grid and tick labels color. (Default: green)');
 dispopt('''showlabelsRMS''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show the RMS tick labels']));
-dispopt('''tickRMSangle''','Angle for RMS tick labels with the observation point. (Default: 135 deg.)');
-dispopt('''styleRMS''','Linestyle of the RMS grid');
+dispopt('''tickRMSangle''',['Angle for RMS tick labels with the observation '...
+    'point. (Default: 135 deg.)']);
+dispopt('''rmsLabelFormat''',sprintf(['String format for RMS contour labels, e.g. ' ...
+    '''0:.2f''.\n\t\t' ...
+    '(Default ''0'', format as specified by str function.)']));
+dispopt('''styleRMS''','Line style of the RMS grid');
 dispopt('''widthRMS''','Line width of the RMS grid');
 dispopt('''titleRMS''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show RMSD axis title']));
 
 disp('STD axis options:')
-dispopt('''tickSTD''','STD values to plot gridding circles from origin');
+dispopt('''tickSTD''','STD values to plot grid circles from origin');
+dispopt('''rincSTD''','axis tick increment for STD values');
 dispopt('''colSTD''','STD grid and tick labels color. (Default: black)');
 dispopt('''showlabelsSTD''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show the STD tick labels']));
-dispopt('''styleSTD''','Linestyle of the STD grid');
+dispopt('''styleSTD''','Line style of the STD grid');
 dispopt('''widthSTD''','Line width of the STD grid');
 dispopt('''titleSTD''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show STD axis title']));
-dispopt('''limSTD''','Max of the STD axis (radius of the largest circle)');
 
 disp('CORRELATION axis options:')
 dispopt('''tickCOR''','CORRELATON grid values');
 dispopt('''colCOR''','CORRELATION grid color. (Default: blue)');
 dispopt('''showlabelsCOR''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show the CORRELATION tick labels']));
-dispopt('''styleCOR''','Linestyle of the COR grid');
+dispopt('''styleCOR''','Line style of the COR grid');
 dispopt('''widthCOR''','Line width of the COR grid');
 dispopt('''titleCOR''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show CORRELATION axis title']));
 
-disp('Observation STD options:')
+disp('Observation Point options:')
 dispopt('''colOBS''','Observation STD color. (Default: magenta)');
-dispopt('''markerObs''','Marker for observation STD point on axis. (Default: none)');
-dispopt('''styleOBS''','Linestyle of the observation STD circle');
+dispopt('''markerObs''',sprintf(['Marker to use for x-axis indicating observed STD.' ...
+    '\n\t\t' ...
+    'A choice of ''none'' will suppress appearance of marker. (Default ''none'')']));
+dispopt('''styleOBS''',sprintf(['Line style for observation grid line. A choice of ' ...
+    'empty string ('''')\n\t\t' ...
+    'will suppress appearance of the grid line. (Default: '''')']));
 dispopt('''widthOBS''','Line width of the observation STD circle');
 dispopt('''titleOBS''','Label for observation STD point on axis');
 

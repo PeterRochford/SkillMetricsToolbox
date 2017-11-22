@@ -31,8 +31,12 @@ function varargout = plot_pattern_diagram_colorbar(X,Y,Z,option)
 % 	hp: returns handles of plotted points
 
 % Plot color shaded data points using scatter plot
+fontSize = get(gcf,'DefaultAxesFontSize');
+markerSize = option.markerSize^2;
+
 hp=scatter(X,Y,40,Z);
-set(hp,'MarkerFaceColor',get(hp,'MarkerEdgeColor'),'Marker','d')
+set(hp,'MarkerFaceColor',get(hp,'MarkerEdgeColor'),'Marker','d', ...
+    'SizeData',markerSize)
 
 % Set Matlab/Octave scaling for color bar position
 if is_octave()
@@ -47,7 +51,7 @@ switch option.colormap
         hc=colorbar('Location','NorthOutside');
         location = get_color_bar_location(hc,option,xscale,yscale, ...
                                            cxscale);
-        set(hc,'Position',location,'FontSize',8)
+        set(hc,'Position',location,'FontSize',fontSize)
     case 'off'
         if length(Z) > 1
             caxis([min(Z) max(Z)])
@@ -57,7 +61,7 @@ switch option.colormap
             set(hc,'Position',location,...
                 'XTick',[min(Z) max(Z)], ...
                 'XTickLabel',{'Min. RMSD','Max. RMSD'},...
-                'FontSize',8)
+                'FontSize',fontSize)
         end
     otherwise
         error(['Invalid option for option.colormap: ' option.colormap]);
@@ -106,7 +110,7 @@ elseif ~exist('yscale','var')
     yscale = 1.0; cxscale = 1.0;
 elseif ~exist('cxscale','var')
     cxscale = 1.0;
-endif
+end
 
 % Get current position of color bar
 cp=get(hc,'Position');
@@ -114,12 +118,12 @@ cp=get(hc,'Position');
 % Calculate location    
 if isfield(option,'checkSTATS')
     % Taylor diagram
-    location = [cp(1)+0.8*xscale*cp(3) yscale*cp(2) ...
+    location = [cp(1)+0.7*xscale*cp(3) 0.9*yscale*cp(2) ...
                 cxscale*cp(3)/3 cp(4)/2];
 else
     % target diagram
     location = [cp(1)+xscale*cp(3) yscale*cp(2) ...
                 cxscale*cp(3)/3 cp(4)/2];
-endif
+end
 
 end % function get_color_bar_location
