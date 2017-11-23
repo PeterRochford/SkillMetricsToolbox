@@ -6,7 +6,7 @@ function ax = plot_taylor_axes(axes, cax, option)
 %   returned by the GET_TAYLOR_DIAGRAM_AXES function.
 %
 %   INPUTS:
-%   axes   : data structure containing axes information for target diagram
+%   axes   : data structure containing axes information for Taylor diagram
 %   cax    : handle for plot axes
 %   option : data structure containing option values. (Refer to 
 %            GET_TAYLOR_DIAGRAM_OPTIONS function for more information.)
@@ -19,13 +19,14 @@ function ax = plot_taylor_axes(axes, cax, option)
 %                         observation point
 %   option.titleCOR     : title for CORRELATION axis
 %   option.titleRMS     : title for RMS axis
-%   option.titleSTD     : title fot STD axis
+%   option.titleSTD     : title for STD axis
 %
 %   OUTPUTS:
 %	  ax: returns a data structure of handles of axis labels
 
 ax = [];
 axlabweight = 'bold';
+fontSize = get(gcf,'DefaultAxesFontSize') + 2;
 ix = 0;
 if option.numberPanels == 1
     % Single panel
@@ -37,10 +38,11 @@ if option.numberPanels == 1
           x = -0.1*axes.rmax; y = 0.25*axes.rmax;
           ax(ix).handle = text(x,y,'Standard Deviation', ...
           'rotation',90, 'color',option.colSTD, ...
-          'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
+          'fontweight',axlabweight,'fontsize',fontSize);
         else
           ax(ix).handle = ylabel('Standard Deviation', ...
-              'color',option.colSTD,'fontweight',axlabweight);
+              'color',option.colSTD,'fontweight',axlabweight, ...
+              'fontsize',fontSize);
         end
     end
 
@@ -58,7 +60,7 @@ if option.numberPanels == 1
             set(ttt(ii),'rotation',ith-90,'color',option.colCOR, ...
                 'horizontalalignment','center',...
                 'verticalalignment','bottom', ...
-                'fontsize',get(ax(1).handle,'fontsize'), ...
+                'fontsize',fontSize, ...
                 'fontweight',axlabweight);
         end
         ax(ix).handle = ttt;
@@ -84,8 +86,8 @@ if option.numberPanels == 1
             ttt(ii)=text(xtextpos,ytextpos,lab(ii));
             set(ttt(ii),'rotation',ith-90,'color',option.colRMS, ...
                 'horizontalalignment','center', ...
-                'verticalalignment','top','fontsize',get(ax(1).handle, ...
-                'fontsize'),'fontweight',axlabweight);
+                'verticalalignment','top','fontsize',fontSize, ...
+                'fontweight',axlabweight);
         end
         ax(ix).handle = ttt;
     end
@@ -103,7 +105,7 @@ else
           'HorizontalAlignment', 'center', ...
           'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
         else
-          ax(ix).handle = ylabel('Standard Deviation', ...
+          ax(ix).handle = xlabel('Standard Deviation', ...
               'color',option.colSTD,'fontweight',axlabweight);
         end
     end
@@ -122,8 +124,7 @@ else
             set(ttt(ii),'rotation',ith-90,'color',option.colCOR, ...
                 'horizontalalignment','center', ...
                 'verticalalignment','bottom', ...
-                'fontsize',get(ax(1).handle,'fontsize'), ...
-                'fontweight',axlabweight);
+                'fontsize',fontSize,'fontweight',axlabweight);
         end
         ax(ix).handle = ttt;
     end
@@ -150,8 +151,7 @@ else
             set(ttt(ii),'Rotation',90.0,'color',option.colRMS, ...
                 'horizontalalignment','center', ...
                 'verticalalignment','bottom', ...
-                'fontsize',get(ax(1).handle,'fontsize'), ...
-                'fontweight',axlabweight);
+                'fontsize',fontSize,'fontweight',axlabweight);
         end
         ax(ix).handle = ttt;
     end

@@ -30,12 +30,13 @@ line(axes.rmax*cs,axes.rmax*sn,'linestyle',option.styleCOR, ...
 
 % annotate them in correlation coefficient
 if strcmp(option.showlabelsCOR,'on')
+    fontSize = get(gcf,'DefaultAxesFontSize');
     rt = 1.05*axes.rmax;
     for i = 1:length(corr)
         text(rt*cst(i),rt*snt(i),num2str(corr(i)),...
             'horizontalalignment','center',...
             'handlevisibility','off','parent',cax, ...
-            'color',option.colCOR);
+            'color',option.colCOR,'fontsize',fontSize);
     end
 end
 

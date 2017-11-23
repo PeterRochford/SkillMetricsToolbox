@@ -31,24 +31,26 @@ for i=1:length(axes.ytick)
 end;
 
 % Add labels
-text(axes.xtick,zeros(size(axes.xtick))-2.*Yoff,axes.xlabel, ...
-    'HorizontalAlignment','center');
-text(zeros(size(axes.ytick))-3.*Xoff,axes.ytick,axes.ylabel, ...
-    'HorizontalAlignment','left');
+fontSize = get(gcf,'DefaultAxesFontSize');
+text(axes.xtick,zeros(size(axes.xtick))-1.*Yoff,axes.xlabel, ...
+    'HorizontalAlignment','center','fontsize',fontSize);
+text(zeros(size(axes.ytick))-0.5.*Xoff,axes.ytick,axes.ylabel, ...
+    'HorizontalAlignment','right','fontsize',fontSize);
 
 % Label x-axis
+fontSize = fontSize + 2;
 xpos = axes.xtick(end) + 3*axes.xtick(end)/30;
 ypos = 0;
 ix = ix + 1;
 ax(ix).handle = text(xpos,ypos,'uRMSD','Color','k', ...
-    'HorizontalAlignment','left');
+    'HorizontalAlignment','left','fontsize',fontSize);
 
 % Label y-axis
 xpos = 0;
 ypos = axes.ytick(end) + 3*axes.ytick(end)/30;
 ix = ix + 1;
 ax(ix).handle = text(xpos,ypos,'Bias','Color','k', ...
-    'HorizontalAlignment','center');
+    'HorizontalAlignment','center','fontsize',fontSize);
 
 box off;
 axis square;

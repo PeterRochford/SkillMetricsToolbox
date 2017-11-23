@@ -24,15 +24,15 @@ if isfield(option,'markerObs') && ~strcmp(option.markerObs,'none')
   hold on
 
   % Display marker on x-axis indicating observed STD
-  plot(obsSTD,0.0,option.markerObs,'color',option.colOBS, ... 
-    'MarkerSize',6,'MarkerFaceColor',option.colOBS, ...
-    'Linewidth',1.0);
+  plot(obsSTD,0.0,option.markerObs,'color',option.colOBS, ...
+    'MarkerSize',option.markerSize,'MarkerFaceColor',option.colOBS, ...
+    'MarkerEdgeColor',option.colOBS,'Linewidth',1.0);
 end
 
 if ~strcmp(option.titleOBS,'')
   % Put label below the marker
   labelweight = 'bold';
-  labelsize = get(ax(1).handle,'fontsize') - 2;
+  labelsize = get(ax(1).handle,'fontsize');
   x = obsSTD; y = -0.05*axes.rmax;
   text(x,y,option.titleOBS, 'color',option.colOBS, ...
         'HorizontalAlignment', 'center', ...
