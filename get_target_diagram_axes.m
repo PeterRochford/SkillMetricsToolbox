@@ -58,7 +58,7 @@ if foundmax == 0;
     maxx = v(2);
     maxy = v(4);
     option.axismax = max(maxx, maxy);
-endif
+end
 
 % Check if equal axes requested
 if isfield(option,'equalAxes') && strcmp(option.equalAxes,'on')
@@ -128,5 +128,4 @@ axes.ytick = ytick;
 axes.xlabel = xlabel;
 axes.ylabel = ylabel;
 
-%axes % debug
 end % function get_target_diagram_axes
