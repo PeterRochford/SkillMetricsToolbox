@@ -51,8 +51,14 @@ end
 
 % DRAW RMS CIRCLES:
 % ANGLE OF THE TICK LABELS
-c82 = cos(option.tickRMSangle*pi/180);
-s82 = sin(option.tickRMSangle*pi/180);
+if option.tickRMSangle > 0
+    tickRMSangle = option.tickRMSangle;
+else
+    phi = atan2(option.tickSTD(end),axes.dx);
+    tickRMSangle = 180.0 - rad2deg(phi);
+end
+c82 = cos(tickRMSangle*pi/180);
+s82 = sin(tickRMSangle*pi/180);
 radius = sqrt(axes.dx^2+axes.rmax^2-2*axes.dx*axes.rmax*xunit);
 
 % Define label format
@@ -72,7 +78,7 @@ for ic = 1 : length(option.tickRMS)
         text(xtextpos,ytextpos, ...
             ['  ' sprintf(labelFormat,iradius)],'verticalalignment','baseline', ...
             'handlevisibility','off','parent',cax,'color', ...
-            option.colRMS,'rotation',option.tickRMSangle-90, ...
+            option.colRMS,'rotation',tickRMSangle-90, ...
             'fontsize',fontSize)
     end
 end
