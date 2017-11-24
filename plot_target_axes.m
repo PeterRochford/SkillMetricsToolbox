@@ -55,6 +55,8 @@ ax(ix).handle = text(xpos,ypos,'Bias','Color','k', ...
 box off;
 axis square;
 axis off;
+
+% Set figure background to white
 set(gcf,'color','w');
 
 end % function plot_target_axes

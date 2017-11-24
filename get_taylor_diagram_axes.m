@@ -69,4 +69,7 @@ if ~isfield(option, 'tickSTD')
     option.tickSTD = tick; option.rincSTD = axes.rinc;
 end
 
+% Set figure background to white
+set(gcf,'color','w');
+
 end % function get_taylor_diagram_axes
