@@ -105,8 +105,13 @@ if strcmp(option.markerLegend,'on')
           if is_octave()
             hLegend=legend(hp,markerLabel,'Location','northeast');
           else
-%            hLegend=legend(hp,markerLabel,'Location','best');
-            hLegend=legend(hp,markerLabel,'Location',[0.7 0.7 0.05 0.1]);
+            if isfield(option,'numberPanels')
+                % Taylor diagram, put legend closer to outermost circle
+                hLegend=legend(hp,markerLabel,'Location',[0.7 0.7 0.05 0.1]);
+            else
+                % Target diagram, let Matlab put legend in best location
+                hLegend=legend(hp,markerLabel,'Location','best');
+            end
 
             % The legend function clears marker customizations such as
             % transparency, so restore transparency by re-updating
