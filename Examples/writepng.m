@@ -21,4 +21,4 @@ if nargin==3
  eval(['!/usr/bin/convert ',filename,'.png ',filename,'.gif '])
 end
 
-endfunction
+end

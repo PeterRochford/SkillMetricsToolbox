@@ -4,7 +4,8 @@
 % reference observations and multiple model predictions for the quantity.
 %
 % This example is a variation on the first example (taylor1) where now the
-% data points are labelled and axes properties are specified.
+% data points are labelled and axes properties are specified. The number format 
+% is also specified for the RMS contour labels.
 %
 % All functions in the Skill Metrics Toolbox are designed to only work with
 % one-dimensional arrays, e.g. time series of observations at a selected
@@ -40,6 +41,11 @@
 % Close any previously open graphics windows
 close all;
 
+% Set the figure properties (optional)
+set(gcf,'units','inches','position',[0,10.0,14.0,10.0]);
+set(gcf, 'DefaultLineLineWidth', 1.5); % linewidth for plots
+set(gcf,'DefaultAxesFontSize',18); % font size of axes text
+
 % Read in data from a mat file
 load('taylor_data.mat');
 
@@ -74,7 +80,8 @@ label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
     'markerLabel',label, ...
     'tickRMS',0.0:20.0:40.0, ...
     'tickSTD',0.0:5.0:50.0, ...
-    'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0]);
+    'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0], ...
+    'rmslabelformat','%.2f');
 
 % Write plot to file
 writepng(gcf,'taylor3.png');

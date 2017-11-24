@@ -41,6 +41,11 @@
 % Close any previously open graphics windows
 close all;
 
+% Set the figure properties (optional)
+set(gcf,'units','inches','position',[0,10.0,14.0,10.0]);
+set(gcf, 'DefaultLineLineWidth', 1.5); % linewidth for plots
+set(gcf,'DefaultAxesFontSize',18); % font size of axes text
+
 % Read in data from a mat file
 load('taylor_data.mat');
 
