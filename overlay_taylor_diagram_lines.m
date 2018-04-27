@@ -33,7 +33,13 @@ if strcmp(option.showlabelsCOR,'on')
     fontSize = get(gcf,'DefaultAxesFontSize');
     rt = 1.05*axes.rmax;
     for i = 1:length(corr)
-        text(rt*cst(i),rt*snt(i),num2str(corr(i)),...
+        if option.numberPanels == 2
+            x = (1.05+abs(cst(i))/30)*axes.rmax*cst(i);
+        else
+            x = rt*cst(i);
+        end
+        y = rt*snt(i);
+        text(x,y,num2str(corr(i)),...
             'horizontalalignment','center',...
             'handlevisibility','off','parent',cax, ...
             'color',option.colCOR,'fontsize',fontSize);
