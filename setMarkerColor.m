@@ -17,6 +17,12 @@ function [hMarker] = setMarkerColor(handle,color,alpha)
 %   CAVEAT:
 %   Function is fragile with regard to testing for handle type. Desire
 %   a better means of testing for the handle property.
+%
+%   DEPENDENCY:
+%   RGBA function that translates a color from multiple formats into a 
+%         [R G B alpha] color-transparency
+%   RGB  triplet function of Ben Mitch:
+%   https://www.mathworks.com/matlabcentral/fileexchange/1805-rgb-m
 
 % Author: Peter A. Rochford
 %         Symplectic, LLC
@@ -25,24 +31,25 @@ function [hMarker] = setMarkerColor(handle,color,alpha)
 
 % Test for handle
 if ~ishandle(handle)
-    error('Not a handle.')
+    error('Not a handle.');
 end
 
 % Get hidden MarkerHandle property (not available in Octave)
 drawnow;
 
-% Test for plot handle
-test = findobj(handle,'-property','Marker');
-if length(test) > 0
-    % Plot handle
-    hMarker = handle.MarkerHandle;
+% Test for MarkerHandle property in plot handle
+if isprop(handle,'MarkerHandle')
+    % Get plot handle
+    hMarker = get(handle,'MarkerHandle');
 else
     % Assume marker handle
     hMarker = handle;
 end
 
 % Set face color and transparency of marker
-hMarker.FaceColorData = uint8(255*rgba(color,alpha));
-hMarker.FaceColorType = 'truecoloralpha';
+if isprop(hMarker,'FaceColorData')
+    hMarker.FaceColorData = uint8(255*rgba(color,alpha));
+    hMarker.FaceColorType = 'truecoloralpha';
+end
 
 end %function setMarkerColor
