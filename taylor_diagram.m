@@ -145,16 +145,16 @@ theta = real(acos(CORs));
 
 if strcmp(option.overlay,'off')
     % __ Draw circles about origin
-    overlay_taylor_diagram_circles(axes,cax,option);
+    axes = overlay_taylor_diagram_circles(axes,cax,option);
     
     % __ Draw lines emanating from origin
-    overlay_taylor_diagram_lines(axes,cax,option);
+    axes = overlay_taylor_diagram_lines(axes,cax,option);
     
     % __ Plot axes for Taylor diagram
-    ax = plot_taylor_axes(axes,cax,option);
+    axes = plot_taylor_axes(axes,cax,option);
     
     % __ Plot marker on axis indicating observation STD
-    plot_taylor_obs(ax,STDs(1),axes,option);
+    axes = plot_taylor_obs(STDs(1),axes,option);
 end % no overlay
 
 % __ Plot data points. Note that only rho(2:N) and theta(2:N) are plotted
@@ -192,7 +192,7 @@ switch nargout
             case 'colorbar'
                  varargout(2) = cell(1);
         end
-		varargout(3) = {ax};		
+		varargout(3) = {axes};
 end
 
 end % taylor_diagram function
@@ -294,7 +294,7 @@ dispopt('''showlabelsRMS''',sprintf(['''on'' (default) / ''off'': ' ...
 dispopt('''tickRMSangle''',['Angle for RMS tick labels with the observation '...
     'point. (Default: 135 deg.)']);
 dispopt('''rmsLabelFormat''',sprintf(['String format for RMS contour labels, e.g. ' ...
-    '''0:.2f''.\n\t\t' ...
+    '''%0:.2f''.\n\t\t' ...
     '(Default ''0'', format as specified by str function.)']));
 dispopt('''styleRMS''','Line style of the RMS grid');
 dispopt('''widthRMS''','Line width of the RMS grid');

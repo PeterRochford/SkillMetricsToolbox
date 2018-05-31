@@ -21,7 +21,7 @@ function varargout = target_diagram(varargin)
 % OUTPUTS:
 % 	hp: returns handles of plotted points
 %  	ht: returns handles of the text legend of points
-%	  axl: returns a structure of handles of axis labels
+%	axl: returns a structure of handles of axis labels
 %
 % LIST OF OPTIONS:
 %	For an exhaustive list of options to customize your diagram, please 
@@ -101,14 +101,6 @@ option = get_target_diagram_options(narg,varargin{:});
 % __ Get axis values for plot
 [axes, option] = get_target_diagram_axes(RMSDs,Bs,option);
 
-% __ Plot axes for target diagram
-if strcmp(option.overlay,'off')
-    ax = plot_target_axes(axes);
-end % no overlay
-
-% __ Overlay circles
-overlay_target_diagram_circles(option);
-
 % __ Plot data points
 switch lower(option.markerDisplayed)
     case 'marker'
@@ -118,6 +110,14 @@ switch lower(option.markerDisplayed)
     otherwise
         error(['Unrecognized option: ' option.markerDisplayed]);
 end
+
+% __ Modify axes for target diagram
+if strcmp(option.overlay,'off')
+    ax = plot_target_axes(axes);
+end % no overlay
+
+% __ Overlay circles
+overlay_target_diagram_circles(option);
 
 % __ Return appropriate arguments
 switch nargout
@@ -139,7 +139,7 @@ switch nargout
             case 'colorbar'
                  varargout(2) = cell(1);
         end
-		varargout(3) = {ax};		
+		varargout(3) = {ax};
 end
 
 end % target_diagram function
