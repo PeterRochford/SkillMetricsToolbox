@@ -96,6 +96,7 @@ if strcmp(option.markerLegend,'on')
             markerLabel = [markerLabel; option.markerLabel(:,i)];
             hMarker = [hMarker; hm];
             lMarker = [lMarker; marker(i,2)];
+            hold on;
         end
     end
     
@@ -105,13 +106,9 @@ if strcmp(option.markerLegend,'on')
           if is_octave()
             hLegend=legend(hp,markerLabel,'Location','northeast');
           else
-            if isfield(option,'numberPanels')
-                % Taylor diagram, put legend closer to outermost circle
-                hLegend=legend(hp,markerLabel,'Location',[0.7 0.7 0.05 0.1]);
-            else
-                % Target diagram, let Matlab put legend in best location
-                hLegend=legend(hp,markerLabel,'Location','best');
-            end
+            % Target diagram, let Matlab put legend in best location
+            hLegend=legend(hp,markerLabel, ...
+                'Location','northeastoutside','AutoUpdate','off');
 
             % The legend function clears marker customizations such as
             % transparency, so restore transparency by re-updating
@@ -178,6 +175,7 @@ else
                 end
                 ht = [ht; htext];
             end
+            hold on;
         end
     end
   	set(ht,'verticalalignment','bottom','horizontalalignment','right', ...
@@ -192,6 +190,7 @@ switch nargout
 		varargout(1) = {hp};
 		varargout(2) = {ht};
 end
+hold on;
 
 end %function plot_pattern_diagram_markers
 
@@ -233,19 +232,21 @@ drawnow;
 for i=1:length(lMarker)
     % Restore marker transparency
     setMarkerColor(handle(i),lMarker(i),alpha);
-
-    % Get legend components
-    % hLegendComponents has 2 children: child 1 = LegendIcon, child 2 = Text (label)
-    hLegendComponents = hLegend.EntryContainer.Children;
-    for isymbol = 1:length(hLegendComponents)
-        hLegendIconComponents = hLegendComponents(isymbol).Icon.Transform.Children;
-
-        % child 1 = Marker, child 2 = LineStrip
-        hLegendMarker = hLegendIconComponents.Children(1);
-
-        % Set legend to same transparency as marker
-        setMarkerColor(hLegendMarker,lMarker(i),alpha); % Apply transparency to marker
-    end
 end
+
+% Get legend components
+% hLegendComponents has 2 children: child 1 = LegendIcon, child 2 = Text (label)
+hLegendComponents = hLegend.EntryContainer.Children;
+for isymbol = 1:length(hLegendComponents)
+    hLegendIconComponents = hLegendComponents(isymbol).Icon.Transform.Children;
+    
+    % child 1 = Marker, child 2 = LineStrip
+    hLegendMarker = hLegendIconComponents.Children(1);
+    
+    % Set legend to same transparency as marker
+    icolor = length(hLegendComponents) + 1 - isymbol;
+    setMarkerColor(hLegendMarker,lMarker(icolor),alpha); % Apply transparency to marker
+end
+
 end %function legendMarkers
 
