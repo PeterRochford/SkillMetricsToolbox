@@ -73,5 +73,11 @@ label = {'M1', 'M2', 'M3'};
     'markerLabel',label, ...
     'ticks',-50.0:10.0:50.0);
 
+% Change fontsize of marker labels
+% FontSize = 10;
+% for i = 1:length(ht)
+%     ht(i).FontSize = FontSize;
+% end
+
 % Write plot to file
 writepng(gcf,'target2.png');

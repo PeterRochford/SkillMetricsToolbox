@@ -80,5 +80,60 @@ label = {'M1', 'M2', 'M3'};
     'ticks',-50.0:10.0:50.0,'limitAxis',50.0, ...
     'circles',[20.0 40.0 50.0], 'circleLineSpec','-.b','circleLineWidth',1.0);
 
+% Universally change font size of axis tick label, axis label,
+% and legend label.
+FontSize = 24;
+% set(axl,'FontSize',FontSize);
+
+% Change font size of only tick labels and axis labels
+% axl.XAxis.FontSize = FontSize;
+% axl.YAxis.FontSize = FontSize;
+
+% Change fontsize of only axis labels
+% xl = get(axl,'xlabel');
+% yl = get(axl,'ylabel');
+% xl.FontSize = FontSize; yl.FontSize = FontSize;
+
+% Change fontsize of only tick labels
+% set_tick_label_size(axl,FontSize);
+
+% Change font size of legend
+% hLegend = findobj(gcf, 'Type', 'Legend');
+% set(hLegend,'FontSize',FontSize);
+
 % Write plot to file
 writepng(gcf,'target4.png');
+
+function set_tick_label_size(axl,FontSize)
+%TICK_LABEL_SIZE Independently set the font size of tick labels.
+%
+%   TICK_LABEL_SIZE(axl,FontSize)
+%   Sets the font size of tick labels associated with the axes handle
+%   AXL to FONTSIZE.
+%
+%   INPUTS:
+%   axl      : handle for axes labels
+%   FontSize : tick label font size
+%
+%   OUTPUTS:
+%   None
+
+% Get handles to axes labels
+xl = get(axl,'XLabel');
+yl = get(axl,'YLabel');
+
+% Get current font size of labels
+xlFontSize = get(xl,'FontSize');
+ylFontSize = get(yl,'FontSize');
+
+% Get axes handles and set tick labels to desired font size
+xAX = get(axl,'XAxis');
+yAX = get(axl,'YAxis');
+set(xAX,'FontSize', FontSize);
+set(yAX,'FontSize', FontSize);
+
+% Reset axes labels to original font size
+set(xl, 'FontSize', xlFontSize);
+set(yl, 'FontSize', ylFontSize);
+
+end % set_tick_label_size function

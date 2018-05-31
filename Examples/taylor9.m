@@ -110,5 +110,39 @@ report_duplicate_stats(duplicateStats);
     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0, 'titleCOR', 'on', ...
     'markerSize',14, 'alpha', 0.0);
 
+% Universally change font size of axis tick label, axis label,
+% and legend label.
+% FontSize = 24;
+% set(axl.std,'FontSize',FontSize);
+
+% Change font size of only STD tick labels and axis labels
+% axl.std.XAxis.FontSize = FontSize;
+% axl.std.YAxis.FontSize = FontSize;
+
+% Change fontsize of only STD axis labels
+% xl = get(axl.std,'xlabel');
+% yl = get(axl.std,'ylabel');
+% xl.FontSize = FontSize; yl.FontSize = FontSize;
+
+% Change font size of RMSD contour labels
+% for i = 1:length(axl.rms.tickLabel)
+%     axl.rms.tickLabel(i).FontSize = FontSize;
+% end
+
+% Change font size of only RMSD label
+% for i = 1:length(axl.rms.XLabel)
+%     axl.rms.XLabel(i).FontSize = FontSize;
+% end
+
+% Change font size of only CC label
+% for i = 1:length(axl.cor.XLabel)
+%     axl.cor.XLabel(i).FontSize = FontSize;
+% end
+
+% Change font size of legend
+% hLegend = findobj(gcf, 'Type', 'Legend');
+% set(hLegend,'FontSize',FontSize);
+
 % Write plot to file
 writepng(gcf,'taylor9.png');
+

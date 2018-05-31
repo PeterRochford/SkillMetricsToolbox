@@ -1,5 +1,5 @@
 % How to create a target diagram with a legend plus changed marker colors 
- % and circles that show co-located points.
+% and circles that show co-located points.
 %
 % A seventh example of how to create a target diagram given one set of 
 % reference observations and multiple model predictions for the quantity.

@@ -83,5 +83,11 @@ label = {'Non-Dimensional Observation', 'M1', 'M2', 'M3'};
     'tickCOR',[0.0:0.2:0.8 0.9 0.95 0.99 1.0], ...
     'rmslabelformat','%.2f');
 
+% Change fontsize of marker labels
+% FontSize = 10;
+% for i = 1:length(ht)
+%     ht(i).FontSize = FontSize;
+% end
+
 % Write plot to file
 writepng(gcf,'taylor3.png');
