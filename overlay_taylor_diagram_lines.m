@@ -1,4 +1,4 @@
-function overlay_taylor_diagram_lines(axes,cax,option)
+function axes = overlay_taylor_diagram_lines(axes,cax,option)
 %OVERLAY_TAYLOR_DIAGRAM_LINES Overlay lines emanating from origin on a Taylor diagram.
 %
 %   OVERLAY_TAYLOR_DIAGRAM_CIRCLES(AXES,CAX,OPTION)
@@ -16,7 +16,7 @@ function overlay_taylor_diagram_lines(axes,cax,option)
 %   option.widthCOR : Line width of the CORs grid
 %
 %   OUTPUTS:
-%   None.
+%   axes.cor.tickLabel : tick labels of correlation coefficient contours
 
 % DRAW CORRELATION LINES EMANATING FROM THE ORIGIN:
 corr = option.tickCOR(option.numberPanels).val;
@@ -39,11 +39,12 @@ if strcmp(option.showlabelsCOR,'on')
             x = rt*cst(i);
         end
         y = rt*snt(i);
-        text(x,y,num2str(corr(i)),...
+        ttt(i) = text(x,y,num2str(corr(i)),...
             'horizontalalignment','center',...
             'handlevisibility','off','parent',cax, ...
             'color',option.colCOR,'fontsize',fontSize);
     end
 end
+axes.cor.tickLabel = ttt;
 
 end % function overlay_target_diagram_circles
