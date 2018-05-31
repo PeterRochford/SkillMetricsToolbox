@@ -113,17 +113,18 @@ elseif ~exist('cxscale','var')
 end
 
 % Get current position of color bar
-cp=get(hc,'Position');
+cp = get(hc,'Position');
 
 % Calculate location    
 if isfield(option,'checkSTATS')
     % Taylor diagram
-    location = [cp(1)+0.7*xscale*cp(3) 0.9*yscale*cp(2) ...
-                cxscale*cp(3)/3 cp(4)/2];
+    location = [cp(1)+xscale*0.5*(1+cosd(45))*cp(3) yscale*cp(2) ...
+                cxscale*cp(3)/4 cp(4)/2];
 else
     % target diagram
-    location = [cp(1)+xscale*cp(3) yscale*cp(2) ...
-                cxscale*cp(3)/3 cp(4)/2];
+    location = [cp(1)+xscale*0.5*(1+cosd(60))*cp(3) yscale*cp(2) ...
+                cxscale*cp(3)/4 cp(4)/2];
 end
+hold on;
 
 end % function get_color_bar_location

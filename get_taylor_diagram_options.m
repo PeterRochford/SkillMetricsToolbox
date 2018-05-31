@@ -54,7 +54,7 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                            Only markers will be displayed.
 %   option.rincRMS         : axis tick increment for RMS values
 %   option.rincSTD         : axis tick increment for STD values
-%   option.rmslabelformat  : string format for RMS contour labels, e.g. '0:.2f'.
+%   option.rmslabelformat  : string format for RMS contour labels, e.g. '%.2f'.
 %                            (Default '0', format as specified by str function)
 %
 %   option.showlabelsCOR   : show correlation coefficient labels 

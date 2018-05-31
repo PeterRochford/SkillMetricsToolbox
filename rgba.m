@@ -1,5 +1,5 @@
 function out=rgba(color,alpha)
-%RGBA Translates a colour from multiple formats into a [R G B alpha] color-transparency
+%RGBA Translates a color from multiple formats into a [R G B alpha] color-transparency
 %
 %   [RGBa] = RGBA(COLOR,ALPHA)
 %   Matlab color-transparency is returned as [R G B alpha] where alpha 
