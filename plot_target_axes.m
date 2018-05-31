@@ -11,52 +11,43 @@ function ax = plot_target_axes(axes)
 %   OUTPUTS:
 %	ax: returns a structure of handles of axis labels
 
-ix = 0;
+% Center axes location.
+% Note that the consequence is the tick labels are suppressed
+% at the outer ticks in the plot.
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
 
-% Draw axis lines
-h = plot([axes.xtick(1) axes.xtick(end)],[0 0],'k'); % x-axis
-hold on;
-plot([0 0],[axes.ytick(1) axes.ytick(end)],'k'); % y-axis
+% Turn off bounding box and make axes square
+box off;
+axis square;
 
-% Get offsets
-Xoff=diff(get(gca,'XLim'))./40;
-Yoff=diff(get(gca,'YLim'))./40;
+% Set new ticks
+xticks(axes.xtick);
+yticks(axes.ytick);
 
-% Plot new ticks  
-for i=1:length(axes.xtick)
-    plot([axes.xtick(i) axes.xtick(i)],[0 Yoff],'-k');
-end;
-for i=1:length(axes.ytick)
-   plot([Xoff, 0],[axes.ytick(i) axes.ytick(i)],'-k');
-end;
+% Set tick labels
+xticklabels(axes.xlabel);
+yticklabels(axes.ylabel);
 
-% Add labels
-fontSize = get(gcf,'DefaultAxesFontSize');
-text(axes.xtick,zeros(size(axes.xtick))-1.*Yoff,axes.xlabel, ...
-    'HorizontalAlignment','center','fontsize',fontSize);
-text(zeros(size(axes.ytick))-0.5.*Xoff,axes.ytick,axes.ylabel, ...
-    'HorizontalAlignment','right','fontsize',fontSize);
+% Set axes limits
+axis([axes.xtick(1), axes.xtick(end), axes.ytick(1), axes.ytick(end)])
 
 % Label x-axis
-fontSize = fontSize + 2;
-xpos = axes.xtick(end) + 3*axes.xtick(end)/30;
-ypos = 0;
-ix = ix + 1;
-ax(ix).handle = text(xpos,ypos,'uRMSD','Color','k', ...
-    'HorizontalAlignment','left','fontsize',fontSize);
+fontSize = get(gcf,'DefaultAxesFontSize');
+xpos = axes.xtick(end) + 2*axes.xtick(end)/30;
+ypos = -axes.xtick(end)/30;
+xlabh = xlabel('uRMSD','fontsize',fontSize);
+set(xlabh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'left');
 
 % Label y-axis
 xpos = 0;
 ypos = axes.ytick(end) + 3*axes.ytick(end)/30;
-ix = ix + 1;
-ax(ix).handle = text(xpos,ypos,'Bias','Color','k', ...
-    'HorizontalAlignment','center','fontsize',fontSize);
+ylabh = ylabel('Bias','fontsize',fontSize);
+set(ylabh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'center');
 
-box off;
-axis square;
-axis off;
-
-% Set figure background to white
+% Set figure background to white, otherwise you get a white figure
+% inside a gray box
 set(gcf,'color','w');
 
 end % function plot_target_axes

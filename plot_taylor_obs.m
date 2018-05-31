@@ -1,4 +1,4 @@
-function varargout = plot_taylor_obs(ax,obsSTD,axes,option)
+function axes = plot_taylor_obs(obsSTD,axes,option)
 %PLOT_TAYLOR_OBS Plots observation STD on Taylor diagram.
 %
 %   PLOT_TAYLOR_OBS(AX,obsSTD,AXES,OPTION)
@@ -6,9 +6,8 @@ function varargout = plot_taylor_obs(ax,obsSTD,axes,option)
 %   a label for this point, and a contour circle indicating the STD value.
 %
 %   INPUTS:
-%   ax     : axes handle for Taylor diagram
 %   obsSTD : observation standard deviation
-%   axes   : axes values used in Taylor diagram
+%   axes   : axes information of Taylor diagram
 %   option : data structure containing option values. (Refer to 
 %     GET_TARGET_DIAGRAM_OPTIONS function for more information.)
 %   option.colOBS    : color for observation labels (Default : magenta)
@@ -18,7 +17,7 @@ function varargout = plot_taylor_obs(ax,obsSTD,axes,option)
 %   option.widthOBS  : linewidth for observation grid line (Default: .8)
 %
 %   OUTPUTS:
-% 	None
+% 	axes.std =       : current axes
 
 if isfield(option,'markerObs') && ~strcmp(option.markerObs,'none')
   hold on
@@ -31,12 +30,12 @@ end
 
 if ~strcmp(option.titleOBS,'')
   % Put label below the marker
-  labelweight = 'bold';
-  labelsize = get(ax(1).handle,'fontsize');
-  x = obsSTD; y = -0.05*axes.rmax;
-  text(x,y,option.titleOBS, 'color',option.colOBS, ...
-        'HorizontalAlignment', 'center', ...
-        'fontweight',labelweight, 'fontsize',labelsize);
+  labelsize = get(axes.std,'fontsize');
+  xlabelh = xlabel(option.titleOBS, 'color',option.colOBS, ...
+        'fontweight','bold', 'fontsize',labelsize);
+  xypos = get(xlabelh,'position');
+  xypos(1) = obsSTD; % set x-position to below marker
+  set(xlabelh,'position',xypos, 'horizontalAlignment', 'center');
 end
 
 if ~strcmp(option.styleOBS,'')
@@ -48,5 +47,7 @@ if ~strcmp(option.styleOBS,'')
   hhh = line(xunit,yunit,'linestyle',option.styleOBS,'color', ...
       option.colOBS,'linewidth',option.widthOBS);
 end
+
+axes.std = gca;
 
 end %function plot_taylor_obs

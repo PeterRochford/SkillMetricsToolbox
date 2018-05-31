@@ -1,4 +1,4 @@
-function ax = plot_taylor_axes(axes, cax, option)
+function axes = plot_taylor_axes(axes, cax, option)
 %PLOT_TAYLOR_AXES Plot axes for Taylor diagram.
 %
 %   AX = PLOT_TAYLOR_AXES(AXES,OPTION) plots the x & y axes for a Taylor 
@@ -22,32 +22,28 @@ function ax = plot_taylor_axes(axes, cax, option)
 %   option.titleSTD     : title for STD axis
 %
 %   OUTPUTS:
-%	  ax: returns a data structure of handles of axis labels
+%	  axes: returns a data structure of handles of axis labels
 
-ax = [];
 axlabweight = 'bold';
 fontSize = get(gcf,'DefaultAxesFontSize') + 2;
-ix = 0;
 if option.numberPanels == 1
     % Single panel
     
     if strcmp(option.titleSTD,'on')
-        ix = ix + 1;
         if is_octave()
-          ttt = ylabel('test','fontsize',14);
+          ttt = ylabel('test','fontsize',fontSize);
           x = -0.1*axes.rmax; y = 0.25*axes.rmax;
-          ax(ix).handle = text(x,y,'Standard Deviation', ...
+          text(x,y,'Standard Deviation', ...
           'rotation',90, 'color',option.colSTD, ...
           'fontweight',axlabweight,'fontsize',fontSize);
         else
-          ax(ix).handle = ylabel('Standard Deviation', ...
+          ylabel('Standard Deviation', ...
               'color',option.colSTD,'fontweight',axlabweight, ...
               'fontsize',fontSize);
         end
     end
 
     if strcmp(option.titleCOR,'on')
-        ix = ix + 1;
         clear ttt
         pos1 = 45;	DA = 15;
         lab = 'Correlation Coefficient';
@@ -55,19 +51,17 @@ if option.numberPanels == 1
         dd = 1.1*axes.rmax;	ii = 0;
         for ic = 1 : length(c)
             ith = c(ic);
-            ii = ii + 1;
-            ttt(ii)=text(dd*cos(ith*pi/180),dd*sin(ith*pi/180),lab(ii));
-            set(ttt(ii),'rotation',ith-90,'color',option.colCOR, ...
+            ttt(ic)=text(dd*cos(ith*pi/180),dd*sin(ith*pi/180),lab(ic));
+            set(ttt(ic),'rotation',ith-90,'color',option.colCOR, ...
                 'horizontalalignment','center',...
                 'verticalalignment','bottom', ...
                 'fontsize',fontSize, ...
                 'fontweight',axlabweight);
         end
-        ax(ix).handle = ttt;
+        axes.cor.XLabel = ttt;
     end
     
     if strcmp(option.titleRMS,'on')
-        ix = ix + 1;
         clear ttt
         DA = 15; pos1 = 160;
         lab = 'RMSD';
@@ -89,29 +83,27 @@ if option.numberPanels == 1
                 'verticalalignment','top','fontsize',fontSize, ...
                 'fontweight',axlabweight);
         end
-        ax(ix).handle = ttt;
+        axes.rms.XLabel = ttt;
     end
     
 else
     % Double panel
 
     if strcmp(option.titleSTD,'on')
-        ix = ix + 1;
         if is_octave()
           ttt = ylabel('test','fontsize',14);
           x = 0; y = -0.15*axes.rmax;
-          ax(ix).handle = text(x,y,'Standard Deviation', ...
+          text(x,y,'Standard Deviation', ...
           'rotation',0, 'color',option.colSTD, ...
           'HorizontalAlignment', 'center', ...
           'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
         else
-          ax(ix).handle = xlabel('Standard Deviation', ...
+          xlabel('Standard Deviation', ...
               'color',option.colSTD,'fontweight',axlabweight);
         end
     end
     
     if strcmp(option.titleCOR,'on')
-        ix = ix + 1;
         clear ttt
         pos1 = 90;	DA = 25;
         lab = 'Correlation Coefficient';
@@ -126,11 +118,10 @@ else
                 'verticalalignment','bottom', ...
                 'fontsize',fontSize,'fontweight',axlabweight);
         end
-        ax(ix).handle = ttt;
+        axes.cor = ttt;
     end
     
     if strcmp(option.titleRMS,'on')
-        ix = ix + 1;
         clear ttt
         pos1 = 160; DA = 10;
         lab = 'RMSD';
@@ -153,25 +144,39 @@ else
                 'verticalalignment','bottom', ...
                 'fontsize',fontSize,'fontweight',axlabweight);
         end
-        ax(ix).handle = ttt;
+        axes.rms = ttt;
     end
 end
 
+% Set color of tick labels to that specified for STD contours
+set(gca,'XColor',option.colSTD);
+set(gca,'YColor',option.colSTD);
+
 % VARIOUS ADJUSTMENTS TO THE PLOT:
-set(cax,'dataaspectratio',[1 1 1]); axis(cax,'off');
+set(cax,'dataaspectratio',[1 1 1]);
 set(cax,'NextPlot',axes.next);
 set(get(cax,'xlabel'),'visible','on')
 set(get(cax,'ylabel'),'visible','on')
 view(cax,2);
 % set axis limits
 if option.numberPanels == 2
-    axis(cax,axes.rmax*[-1.15 1.15 0 1.15]);
+    axis(cax,axes.rmax*[-1 1 0 1]);
     line([-axes.rmax axes.rmax],[0 0],'color',axes.tc,'linewidth',1.2);
     line([0 0],[0 axes.rmax],'color',axes.tc);
+    % remove y-axis
+    set(gca,'YTick',[]);
+    set(gca,'ycolor','w');
 else
-    axis(cax,axes.rmax*[0 1.15 0 1.15]);
+    xtick = get(cax,'XTick');
+    xtick = xtick( xtick >= 0);
+    ytick = get(cax,'YTick');
+    ytick = ytick( ytick >= 0);
+    axis(cax,axes.rmax*[0 1 0 1]);
+    xticks(xtick); yticks(ytick);
     line([0 axes.rmax],[0 0],'color',axes.tc,'linewidth',1.2);
     line([0 0],[0 axes.rmax],'color',axes.tc,'linewidth',2);
 end
+
+axes.std = gca;
 
 end % function plot_taylor_axes
