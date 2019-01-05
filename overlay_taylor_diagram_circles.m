@@ -57,8 +57,8 @@ else
     phi = atan2(option.tickSTD(end),axes.dx);
     tickRMSangle = 180.0 - rad2deg(phi);
 end
-c82 = cos(tickRMSangle*pi/180);
-s82 = sin(tickRMSangle*pi/180);
+cst = cos(tickRMSangle*pi/180);
+snt = sin(tickRMSangle*pi/180);
 radius = sqrt(axes.dx^2+axes.rmax^2-2*axes.dx*axes.rmax*xunit);
 
 % Define label format
@@ -74,8 +74,8 @@ for ic = 1 : length(option.tickRMS)
             option.styleRMS,'color',option.colRMS,'linewidth', ...
             option.widthRMS,'handlevisibility','off','parent',cax);
         if strcmp(option.showlabelsRMS,'on')
-            xtextpos = double((iradius+option.rincRMS/20)*c82+axes.dx);
-            ytextpos = (iradius+option.rincRMS/20)*s82;
+            xtextpos = double((iradius+option.rincRMS/20)*cst+axes.dx);
+            ytextpos = (iradius+option.rincRMS/20)*snt;
             ttt(ic) = text(xtextpos,ytextpos, ...
                 ['  ' sprintf(labelFormat,iradius)],'verticalalignment','baseline', ...
                 'handlevisibility','off','parent',cax,'color', ...
@@ -88,7 +88,6 @@ axes.rms.tickLabel = ttt;
 
 % DRAW STD CIRCLES:
 % draw radial circles
-tickValues = [];
 for ic = 1 : length(option.tickSTD)
     i = option.tickSTD(ic);
     hhh = line(xunit*i,yunit*i,'linestyle',option.styleSTD,'color', ...
@@ -97,6 +96,7 @@ for ic = 1 : length(option.tickSTD)
 end
 
 % Set tick values for axes
+tickValues = [];
 if strcmp(option.showlabelsSTD,'on')
     if option.numberPanels == 2
         tickValues = horzcat(-option.tickSTD,option.tickSTD);
