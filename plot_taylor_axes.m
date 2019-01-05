@@ -71,6 +71,8 @@ if option.numberPanels == 1
         else
           dd = 0.7*option.tickRMS(2)+0.3*option.tickRMS(3);
         end
+
+        % Write label in a circular arc
         ii = 0;
         for ic = 1 : length(c)
             ith = c(ic); 
@@ -94,12 +96,13 @@ else
           ttt = ylabel('test','fontsize',14);
           x = 0; y = -0.15*axes.rmax;
           text(x,y,'Standard Deviation', ...
-          'rotation',0, 'color',option.colSTD, ...
-          'HorizontalAlignment', 'center', ...
-          'fontweight',axlabweight, 'fontsize',get(ttt,'fontsize'));
+            'rotation',0, 'color',option.colSTD, ...
+            'HorizontalAlignment', 'center', ...
+            'fontweight',axlabweight, 'fontsize',fontSize);
         else
           xlabel('Standard Deviation', ...
-              'color',option.colSTD,'fontweight',axlabweight);
+              'color',option.colSTD,'fontweight',axlabweight, ...
+              'fontsize',fontSize);
         end
     end
     
@@ -109,6 +112,8 @@ else
         lab = 'Correlation Coefficient';
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
         dd = 1.1*axes.rmax;	ii = 0;
+
+        % Write label in a circular arc
         for ic = 1 : length(c)
             ith = c(ic);
             ii = ii + 1;
@@ -153,26 +158,21 @@ set(gca,'XColor',option.colSTD);
 set(gca,'YColor',option.colSTD);
 
 % VARIOUS ADJUSTMENTS TO THE PLOT:
-set(cax,'dataaspectratio',[1 1 1]);
-set(cax,'NextPlot',axes.next);
-set(get(cax,'xlabel'),'visible','on')
-set(get(cax,'ylabel'),'visible','on')
-view(cax,2);
-% set axis limits
+daspect([1 1 1]);
+
+% set axes limits, set ticks, and draw axes lines
 if option.numberPanels == 2
     axis(cax,axes.rmax*[-1 1 0 1]);
     line([-axes.rmax axes.rmax],[0 0],'color',axes.tc,'linewidth',1.2);
     line([0 0],[0 axes.rmax],'color',axes.tc);
-    % remove y-axis
-    set(gca,'YTick',[]);
-    set(gca,'ycolor','w');
+    % hide y-axis line
+    set(gca,'Color','none','YColor','none'); % hide y-axis line
 else
-    xtick = get(cax,'XTick');
-    xtick = xtick( xtick >= 0);
     ytick = get(cax,'YTick');
-    ytick = ytick( ytick >= 0);
+    ytick = ytick(ytick >= 0);
     axis(cax,axes.rmax*[0 1 0 1]);
-    xticks(xtick); yticks(ytick);
+    xticks(ytick); yticks(ytick);
+
     line([0 axes.rmax],[0 0],'color',axes.tc,'linewidth',1.2);
     line([0 0],[0 axes.rmax],'color',axes.tc,'linewidth',2);
 end
