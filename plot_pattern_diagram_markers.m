@@ -23,7 +23,6 @@ function varargout = plot_pattern_diagram_markers(X,Y,option)
 % 	hp: returns handles of plotted points
 % 	ht: returns handles of the text legend of points
 
-
 % Set face color transparency
 alpha = option.alpha;
 
@@ -150,9 +149,10 @@ else
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
             % Plot marker
             h = plot(X(i),Y(i),'o','MarkerSize',markerSize, ...
+                'MarkerFaceColor',option.markerColor, ...
                 'MarkerEdgeColor',option.markerColor, ...
                 'Linewidth',2.5);
-            setMarkerColor(h,option.markerColor,alpha); % Apply transparency to marker
+            hm = setMarkerColor(h,option.markerColor,alpha); % Apply transparency to marker
             hp = [hp; h];
             
             if markerLabel
@@ -178,8 +178,10 @@ else
             hold on;
         end
     end
-  	set(ht,'verticalalignment','bottom','horizontalalignment','right', ...
-        'fontsize',fontSize)
+    if length(ht) > 0
+        set(ht,'verticalalignment','bottom','horizontalalignment','right', ...
+            'fontsize',fontSize)
+    end
 end
 
 % Output
@@ -231,7 +233,7 @@ drawnow;
 % Process for all markers
 for i=1:length(lMarker)
     % Restore marker transparency
-    setMarkerColor(handle(i),lMarker(i),alpha);
+    hm = setMarkerColor(handle(i),lMarker(i),alpha);
 end
 
 % Get legend components
@@ -245,7 +247,7 @@ for isymbol = 1:length(hLegendComponents)
     
     % Set legend to same transparency as marker
     icolor = length(hLegendComponents) + 1 - isymbol;
-    setMarkerColor(hLegendMarker,lMarker(icolor),alpha); % Apply transparency to marker
+    hm = setMarkerColor(hLegendMarker,lMarker(icolor),alpha); % Apply transparency to marker
 end
 
 end %function legendMarkers
