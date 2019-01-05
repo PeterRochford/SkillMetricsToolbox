@@ -34,9 +34,8 @@ function varargout = plot_pattern_diagram_colorbar(X,Y,Z,option)
 fontSize = get(gcf,'DefaultAxesFontSize');
 markerSize = option.markerSize^2;
 
-hp=scatter(X,Y,40,Z);
-set(hp,'MarkerFaceColor',get(hp,'MarkerEdgeColor'),'Marker','d', ...
-    'SizeData',markerSize)
+hp=scatter(X,Y,markerSize,Z,'d');
+set(hp,'MarkerFaceColor',get(hp,'MarkerEdgeColor'))
 
 % Set Matlab/Octave scaling for color bar position
 if is_octave()
