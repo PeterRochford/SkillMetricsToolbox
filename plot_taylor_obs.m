@@ -30,7 +30,7 @@ end
 
 if ~strcmp(option.titleOBS,'')
   % Put label below the marker
-  labelsize = get(axes.std,'fontsize');
+  labelsize = get(axes.std,'fontsize'); % get label size of STD axes
   xlabelh = xlabel(option.titleOBS, 'color',option.colOBS, ...
         'fontweight','bold', 'fontsize',labelsize);
   xypos = get(xlabelh,'position');
