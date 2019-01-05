@@ -37,14 +37,14 @@ axis([axes.xtick(1), axes.xtick(end), axes.ytick(1), axes.ytick(end)])
 fontSize = get(gcf,'DefaultAxesFontSize');
 xpos = axes.xtick(end) + 2*axes.xtick(end)/30;
 ypos = -axes.xtick(end)/30;
-xlabh = xlabel('uRMSD','fontsize',fontSize);
-set(xlabh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'left');
+xlabelh = xlabel('uRMSD','fontsize',fontSize);
+set(xlabelh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'left');
 
 % Label y-axis
 xpos = 0;
 ypos = axes.ytick(end) + 3*axes.ytick(end)/30;
-ylabh = ylabel('Bias','fontsize',fontSize);
-set(ylabh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'center');
+ylabelh = ylabel('Bias','fontsize',fontSize);
+set(ylabelh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'center');
 
 % Set figure background to white, otherwise you get a white figure
 % inside a gray box
