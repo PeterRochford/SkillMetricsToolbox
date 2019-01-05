@@ -10,6 +10,7 @@ function axes = overlay_taylor_diagram_lines(axes,cax,option)
 %   option : data structure containing option values. (Refer to 
 %            GET_TAYLOR_DIAGRAM_OPTIONS function for more information.)
 %   option.colCOR   : CORs grid and tick labels color (Default: blue)
+%   option.numberPanels  : Number of panels
 %   option.showlabelsCOR : Show or not the CORRELATION tick labels
 %   option.styleCOR : Linestyle of the CORs grid
 %   option.tickCOR  : CORs values to plot lines from origin
