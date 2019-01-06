@@ -100,23 +100,40 @@ if strcmp(option.markerLegend,'on')
     end
     
     % Add legend
-    if ~isempty(hp)
-        if ~isempty(option.markerLabel)
-          if is_octave()
-            hLegend=legend(hp,markerLabel,'Location','northeast');
-          else
-            % Target diagram, let Matlab put legend in best location
-            hLegend=legend(hp,markerLabel, ...
-                'Location','northeastoutside','AutoUpdate','off');
-
-            % The legend function clears marker customizations such as
-            % transparency, so restore transparency by re-updating
-            % hMarker.FaceColorData
-            legendMarkers(hp,hLegend,lMarker,alpha)
-          end
-        end
-    else
+    maxLabelLength = max(cellfun('length', markerLabel));
+    if isempty(hp)
         warning('No markers within axis limit ranges.');
+    else
+        if ~isempty(option.markerLabel)
+            if is_octave()
+                hLegend=legend(hp,markerLabel,'Location','northeast');
+            elseif length(markerLabel) <= 4 && maxLabelLength <= 6
+                % Put legend outside diagram
+                hLegend=legend(hp,markerLabel, ...
+                    'Location','northeastoutside','AutoUpdate','off', ...
+                    'FontSize',fontSize);
+
+                % The legend function clears marker customizations such as
+                % transparency, so restore transparency by re-updating
+                % hMarker.FaceColorData
+                legendMarkers(hp,hLegend,lMarker,alpha)
+            else
+                % Put legend to right of the plot in multiple columns as needed
+
+                nmarkers = length(markerLabel);
+                ncol = ceil(nmarkers/15);
+
+                % Plot legend of multi-column markers
+                hLegend=legend(hp,markerLabel, ...
+                    'Location','northeastoutside','AutoUpdate','off', ...
+                    'FontSize',fontSize,'NumColumns',ncol);
+
+                % The legend function clears marker customizations such as
+                % transparency, so restore transparency by re-updating
+                % hMarker.FaceColorData
+                legendMarkers(hp,hLegend,lMarker,alpha)
+            end
+        end
     end
     
     ht = cell(1); % create an empty cell to return
