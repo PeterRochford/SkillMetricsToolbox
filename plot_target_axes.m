@@ -46,6 +46,10 @@ ypos = axes.ytick(end) + 3*axes.ytick(end)/30;
 ylabelh = ylabel('Bias','fontsize',fontSize);
 set(ylabelh,'position',[xpos ypos -1.0], 'horizontalAlignment', 'center');
 
+% Set axis line width
+lineWidth = get(gcf, 'defaultLineLineWidth');
+set(gca,'linewidth',lineWidth);
+
 % Set figure background to white, otherwise you get a white figure
 % inside a gray box
 set(gcf,'color','w');

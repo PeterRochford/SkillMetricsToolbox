@@ -58,7 +58,7 @@ function [option] = get_target_diagram_options(narg,varargin)
 % Set default parameters
 option.alpha = 1.0;
 option.circleLineSpec = '--k';
-option.circleLineWidth = 1.5;
+option.circleLineWidth = get(gcf, 'defaultLineLineWidth');
 option.equalAxes = 'on';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';

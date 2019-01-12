@@ -128,10 +128,12 @@ option.titleCOR = 'on';
 option.titleOBS = '';
 option.titleRMS = 'on';
 option.titleSTD = 'on';
-option.widthCOR = .8;
-option.widthOBS = .8;
-option.widthRMS = .8;
-option.widthSTD = .8;
+
+lineWidth = get(gcf, 'defaultLineLineWidth');
+option.widthCOR = lineWidth;
+option.widthOBS = lineWidth;
+option.widthRMS = lineWidth;
+option.widthSTD = lineWidth;
 
 % Load custom options, storing values in option data structure
 nopt = narg/2;

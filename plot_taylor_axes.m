@@ -177,6 +177,10 @@ else
     line([0 0],[0 axes.rmax],'color',axes.tc,'linewidth',2);
 end
 
+% Set axis line width
+lineWidth = get(gcf, 'defaultLineLineWidth');
+set(gca,'linewidth',lineWidth);
+
 axes.std = gca;
 
 end % function plot_taylor_axes
