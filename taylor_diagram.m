@@ -167,7 +167,14 @@ switch lower(option.markerDisplayed)
     case 'marker'
         [hp, ht] = plot_pattern_diagram_markers(X,Y,option);
     case 'colorbar'
-        hp = plot_pattern_diagram_colorbar(X,Y,RMSs(2:end),option);
+        nBias = length(option.bias);
+        if nBias == 0
+            % Use Centered Root Mean Square Difference for colors
+            hp = plot_pattern_diagram_colorbar(X,Y,RMSs(2:end),option);
+        else
+            % Use Bias values for color
+            hp = plot_pattern_diagram_colorbar(X,Y,option.bias(2:end),option);
+        end
     otherwise
         error(['Unrecognized option: ' option.markerDisplayed]);
 end

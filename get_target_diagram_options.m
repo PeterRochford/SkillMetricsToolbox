@@ -30,6 +30,8 @@ function [option] = get_target_diagram_options(narg,varargin)
 %                            option.nonRMSDz. 
 %   option.equalAxes       : 'on'/'off' switch to set axes to be equal
 %                            (default 'on')
+%   option.locationColorBar : location for the colorbar, 'NorthOutside'
+%                             or 'EastOutside'
 %
 %   option.markerLabelColor : marker label color (Default 'k')
 %   option.markerdisplayed : markers to use for individual experiments
@@ -60,6 +62,7 @@ option.alpha = 1.0;
 option.circleLineSpec = '--k';
 option.circleLineWidth = get(gcf, 'defaultLineLineWidth');
 option.equalAxes = 'on';
+option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
@@ -89,6 +92,8 @@ for iopt = 4 : 2 : narg+3
             check_on_off(option.equalAxes);
         case 'limitaxis'
             option.axismax = optvalue;
+        case 'locationcolorbar'
+            option.locationColorBar=optvalue;
         case 'markerdisplayed'
             option.markerDisplayed=optvalue;
         case 'markercolor'

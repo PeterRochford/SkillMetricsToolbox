@@ -18,6 +18,7 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.alpha      : blending of symbol face color (0.0 transparent
 %                       through 1.0 opaque). (Default : 1.0)
 %   option.axismax    : maximum for the radial contours
+%   option.bias       : bias values of each data point
 %   option.checkSTATS : Check input statistics satisfy Taylor relationship
 %                       (Default : 'off')
 %
@@ -31,6 +32,8 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                        RMSDz values('off'). Set to same value as 
 %                        option.nonRMSDs.
 %
+%   option.locationColorBar : location for the colorbar, 'NorthOutside'
+%                             or 'eastoutside'
 %   option.markerColor     : single color to use for all markers (Default: red)
 %   option.markerDisplayed : markers to use for individual experiments
 %   option.markerLabel     : name of the experiment to use for marker
@@ -100,11 +103,13 @@ else
 	option.numberPanels = 1;
 end
 option.alpha = 1.0;
+option.bias = [];
 option.checkSTATS = 'off';
 option.colCOR = [0 0 1];
 option.colOBS = 'm';
 option.colRMS = [0 .6 0];
 option.colSTD = [0 0 0];
+option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
@@ -143,6 +148,8 @@ for iopt = 4 : 2 : narg+3
 	switch lower(optname)
     case 'alpha'
          option.alpha = optvalue;
+    case 'bias'
+         option.bias = optvalue;
     case 'checkstats'
           option.checkSTATS = optvalue;
           option.checkSTATS = check_on_off(option.checkSTATS);
@@ -156,6 +163,8 @@ for iopt = 4 : 2 : narg+3
         option.colSTD = optvalue;
     case 'limstd'
         option.axismax = optvalue;
+    case 'locationcolorbar'
+        option.locationColorBar=optvalue;
     case 'markerdisplayed'
         option.markerDisplayed=optvalue;
     case 'markercolor'
