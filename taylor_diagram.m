@@ -167,14 +167,14 @@ switch lower(option.markerDisplayed)
     case 'marker'
         [hp, ht] = plot_pattern_diagram_markers(X,Y,option);
     case 'colorbar'
-        nBias = length(option.bias);
-        if nBias == 0
-            % Use Centered Root Mean Square Difference for colors
-            hp = plot_pattern_diagram_colorbar(X,Y,RMSs(2:end),option);
+        if isfield(option, 'cmapzdata')
+            % Use array values provided via option.cmapzdata
+            Z = option.cmapzdata(2:end);
         else
-            % Use Bias values for color
-            hp = plot_pattern_diagram_colorbar(X,Y,option.bias(2:end),option);
+            % Use Centered Root Mean Square Difference for colors
+            Z = RMSs(2:end);
         end
+        hp = plot_pattern_diagram_colorbar(X,Y,Z,option);
     otherwise
         error(['Unrecognized option: ' option.markerDisplayed]);
 end
@@ -271,8 +271,7 @@ dispopt('''alpha''',sprintf(['Blending of symbol face color (0.0 transparent ' .
 dispopt('''axismax''',sprintf(['Maximum for the radial contours']));
 dispopt('''colormap''',sprintf(['''on'' / ''off'' (default): ' ...
     'Switch to map color shading of markers to colormap ("on")\n\t\t' ...
-    'or min to max range of RMSDz values ("off").\n\t\t' ...
-    'Set to same value as option "nonRMSDz".']));
+    'or min to max range of RMSDz values ("off").']));
 
 disp('Marker options:')
 dispopt('''MarkerDisplayed''',sprintf([... 
@@ -288,9 +287,9 @@ dispopt('''markerLegend''',sprintf(['''on'' / ''off'' (default): ' ...
     'Use legend for markers']));
 dispopt('''markerSize''','Marker size (Default: 10)');
 disp('OPTIONS when ''MarkerDisplayed'' == ''colorbar''');
-dispopt('''nonRMSDz''',sprintf(['''on''/ ''off'' (default): ' ... 
-    'Values in RMSDz do not correspond to total RMS Differences.\n\t\t' ...
-    '(Used to make range of RMSDz values appear above color bar.)']));
+dispopt('''cmapzdata''',sprintf(['Data values to use for ' ...
+    'color mapping of markers, e.g. RMSD or BIAS.\n\t\t' ...
+    '(Used to make range of values appear above color bar.)']));
 dispopt('''titleColorBar''','Title of the colorbar.');
 
 disp('RMS axis options:')

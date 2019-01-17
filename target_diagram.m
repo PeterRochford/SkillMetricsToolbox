@@ -15,8 +15,8 @@ function varargout = target_diagram(varargin)
 %   RMSDs : unbiased Root-Mean-Square Difference (RMSD') or normalized
 %           unbiased Root-Mean-Square Difference (RMSD*'). Plotted along 
 %           x-axis as "uRMSD".
-%   RMSDz : total Root-Mean-Square Difference (RMSD) or other quantities 
-%           (if 'nonRMSDz' == 'on'). Labeled on plot as "RMSD".
+%   RMSDz : total Root-Mean-Square Difference (RMSD). Labeled on plot as
+%           "RMSD".
 %
 % OUTPUTS:
 % 	hp: returns handles of plotted points
@@ -163,8 +163,8 @@ function [Bs, RMSDs, RMSDz, narg] = get_target_diagram_arguments(varargin)
 %   RMSDs : unbiased Root-Mean-Square Difference (RMSD') or normalized
 %           unbiased Root-Mean-Square Difference (RMSD*'). Plotted along 
 %           x-axis as "uRMSD".
-%   RMSDz : total Root-Mean-Square Difference (RMSD) or other quantities 
-%           (if 'nonRMSDz' == 'on'). Labeled on plot as "RMSD".
+%   RMSDz : total Root-Mean-Square Difference (RMSD). Labeled on plot as
+%           "RMSD".
 %   narg  : number of optional arguments
     
 Bs=[]; RMSDs=[]; RMSDz=[]; narg = 0;
@@ -208,8 +208,7 @@ dispopt('''overlay''',sprintf(['''on'' / ''off'' (default): ' ...
     '\n\t\tOnly markers will be displayed.']));
 dispopt('''colormap''',sprintf(['''on'' / ''off'' (default): ' ...
     'Switch to map color shading of markers to colormap ("on")\n\t\t' ...
-    'or min to max range of RMSDz values ("off").\n\t\t' ...
-    'Set to same value as option "nonRMSDz".']));
+    'or min to max range of RMSDz values ("off").']));
 
 disp('Marker options:')
 dispopt('''MarkerDisplayed''',sprintf([... 
@@ -224,9 +223,9 @@ dispopt('''markerLegend''',sprintf(['''on'' / ''off'' (default): ' ...
     'Use legend for markers']));
 dispopt('''markerSize''',sprintf(['Marker size (Default: 10)']));
 disp('OPTIONS when ''MarkerDisplayed'' == ''colorbar''');
-dispopt('''nonRMSDz''',sprintf(['''on''/ ''off'' (default): ' ... 
-    'Values in RMSDs do not correspond to total RMS Differences.\n\t\t' ...
-    '(Used to make range of RMSDs values appear above color bar.)']));
+dispopt('''CMapZData''',sprintf(['Data values to use for ' ...
+    'color mapping of markers, e.g. RMSD or BIAS.\n\t\t' ...
+    '(Used to make range of values appear above color bar.)']));
 dispopt('''titleColorBar''',sprintf(['Title of the colorbar.']));
 
 disp('Axes options:')

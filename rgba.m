@@ -51,7 +51,6 @@ end % function rgba
 % DEMO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function rgb_demo(alpha)
-%alpha %debug
  
 figure(1)
 clf

@@ -9,7 +9,7 @@ function varargout = plot_pattern_diagram_colorbar(X,Y,Z,option)
 %   plot in (X,Y) with the colors of each point specified using Z as a 
 %   vector.
 %
-%   The color range is controlled by option.nonRMSDz. 
+%   The color range is controlled by option.cmapzdata.
 %     option.colormap = 'on' the scatter function maps the elements in 
 %       Z to colors in the current colormap
 %     option.colormap = 'off' the color axis is mapped to the range
@@ -59,7 +59,7 @@ switch location
         if is_octave()
           xscale = 0.85; yscale = 0.75; cxscale = 0.7;
         else
-          xscale = 4.5; yscale = 1.0; cxscale = 8.0; %target
+          xscale = 4.5; yscale = 1.0; cxscale = 8.0;
         end
     otherwise
         error(['Error: Invalid color bar location "' location ...
@@ -83,9 +83,7 @@ switch option.colormap
                 'TickDirection','out', 'TickLength',tickLength);
             position = get_color_bar_location(hc,option,xscale,yscale, ...
                                               cxscale);
-            set(hc,'Position',position,...
-                'XTick',[min(Z) max(Z)], ...
-                'XTickLabel',{'Min.','Max.'},...
+            set(hc,'Position',position, 'XTick',[min(Z) max(Z)], ...
                 'FontSize',fontSize)
         end
     otherwise

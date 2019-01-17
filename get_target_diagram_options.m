@@ -24,10 +24,13 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   option.circleLineWidth : circle line width specification (default 1.5)
 %   option.circles         : radii of circles to draw to indicate 
 %                            isopleths of standard deviation
+%   option.CMapZData       : data values to use for color mapping of
+%                            markers, e.g. RMSD or BIAS. (Default empty)
+%
 %   option.colormap        : 'on'/'off' switch to map color shading of
-%                            markers to colormap ('on') or min to max range
-%                            of RMSDz values ('off'). Set to same value as
-%                            option.nonRMSDz. 
+%                            markers to CMapZData values ('on') or min to
+%                            max range of CMapZData values ('off').
+%                            (Default : 'on')
 %   option.equalAxes       : 'on'/'off' switch to set axes to be equal
 %                            (default 'on')
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
@@ -40,8 +43,6 @@ function [option] = get_target_diagram_options(narg,varargin)
 %                            (Default 'off')
 %   option.markerSize      : marker size (Default 12)
 %
-%   option.nonRMSDz        : 'on'/'off' switch indicating values in RMSDz 
-%     do not correspond to total RMS Differences. (Default 'off')
 %   option.normalized      : statistics supplied are normalized with 
 %                            respect to the standard deviation of reference
 %                            values (Default 'off')
@@ -61,6 +62,7 @@ function [option] = get_target_diagram_options(narg,varargin)
 option.alpha = 1.0;
 option.circleLineSpec = '--k';
 option.circleLineWidth = get(gcf, 'defaultLineLineWidth');
+option.colormap = 'on';
 option.equalAxes = 'on';
 option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
@@ -68,7 +70,6 @@ option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
 option.markerLegend = 'off';
 option.markerSize = 10;
-option.nonRMSDz = 'off';
 option.normalized = 'off';
 option.obsUncertainty = 0.0;
 option.overlay = 'off';
@@ -87,6 +88,13 @@ for iopt = 4 : 2 : narg+3
             option.circleLineWidth=optvalue;
         case 'circles'
             option.circles=optvalue;
+        case 'colormap'
+            option.colormap=optvalue;
+        case 'cmapzdata'
+             option.cmapzdata = optvalue;
+             if isa(option.cmapzdata,'char')
+                error('CMapZdata cannot be a char!');
+            end
         case 'equalaxes'
             option.equalAxes=optvalue;
             check_on_off(option.equalAxes);
@@ -108,8 +116,7 @@ for iopt = 4 : 2 : narg+3
         case 'markersize'
             option.markerSize=optvalue;
         case 'nonrmsdz'
-            option.nonRMSDz=optvalue;
-            check_on_off(option.nonRMSDz);
+            error('nonRMSDz is an obsolete option. Use CMapZdata instead.');
         case 'normalized'
             option.normalized=optvalue;
             check_on_off(option.normalized);
@@ -130,7 +137,5 @@ for iopt = 4 : 2 : narg+3
             error(['Unrecognized option: ' optname]);
     end
 end % iopt loop
-
-option.colormap = option.nonRMSDz;
 
 end %function get_target_diagram_options

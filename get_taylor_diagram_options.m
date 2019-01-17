@@ -18,19 +18,19 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.alpha      : blending of symbol face color (0.0 transparent
 %                       through 1.0 opaque). (Default : 1.0)
 %   option.axismax    : maximum for the radial contours
-%   option.bias       : bias values of each data point
 %   option.checkSTATS : Check input statistics satisfy Taylor relationship
 %                       (Default : 'off')
+%   option.CMapZData  : data values to use for color mapping of
+%                       markers, e.g. RMSD or BIAS. (Default empty)
 %
 %   option.colCOR      : color for correlation coefficient labels (Default : blue)
 %   option.colOBS      : color for observation labels (Default : magenta)
 %   option.colRMS      : color for RMS labels (Default : medium green)
 %   option.colSTD      : color for STD labels (Default : black)
-%
 %   option.colormap    : 'on'/'off' switch to map color shading of
-%                        markers to colormap ('on') or min to max range of 
-%                        RMSDz values('off'). Set to same value as 
-%                        option.nonRMSDs.
+%                        markers to CMapZData values ('on') or min to
+%                        max range of CMapZData values ('off').
+%                        (Default : 'on')
 %
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'eastoutside'
@@ -44,9 +44,6 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                            marker. (Default 'none')
 %   option.markerSize      : marker size (Default 10)
 %
-%   option.nonRMSDz        : 'on'/'off' switch indicating values in RMSDs 
-%                            do not correspond to total RMS Differences.
-%                            (Default 'off')
 %   option.numberPanels    : Number of panels to display
 %                            = 1 for positive correlations
 %                            = 2 for positive and negative correlations
@@ -103,12 +100,12 @@ else
 	option.numberPanels = 1;
 end
 option.alpha = 1.0;
-option.bias = [];
 option.checkSTATS = 'off';
 option.colCOR = [0 0 1];
 option.colOBS = 'm';
 option.colRMS = [0 .6 0];
 option.colSTD = [0 0 0];
+option.colormap = 'on';
 option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
@@ -116,7 +113,6 @@ option.markerDisplayed = 'marker';
 option.markerLegend = 'off';
 option.markerObs = 'none';
 option.markerSize = 10;
-option.nonRMSDz = 'off';
 option.overlay = 'off';
 option.rmslabelformat = '%.f';
 option.showlabelsCOR = 'on';
@@ -148,15 +144,20 @@ for iopt = 4 : 2 : narg+3
 	switch lower(optname)
     case 'alpha'
          option.alpha = optvalue;
-    case 'bias'
-         option.bias = optvalue;
     case 'checkstats'
           option.checkSTATS = optvalue;
           option.checkSTATS = check_on_off(option.checkSTATS);
+    case 'cmapzdata'
+         option.cmapzdata = optvalue;
+         if isa(option.cmapzdata,'char')
+            error('CMapZdata cannot be a char!');
+        end
     case 'colcor'
          option.colCOR = optvalue;
     case 'colobs'
          option.colOBS = optvalue;
+    case 'colormap'
+         option.colormap = optvalue;
     case 'colrms'
          option.colRMS = optvalue;
     case 'colstd'
@@ -182,8 +183,7 @@ for iopt = 4 : 2 : narg+3
     case 'markersize'
         option.markerSize=optvalue;
     case 'nonrmsdz'
-        option.nonRMSDz=optvalue;
-        check_on_off(option.nonRMSDz);
+        error('nonRMSDz is an obsolete option. Use CMapZdata instead.');
     case 'numberpanels'
         option.numberPanels = optvalue;
     case 'overlay'
@@ -251,11 +251,6 @@ for iopt = 4 : 2 : narg+3
   		error(['Unrecognized option: ' optname]);
 	end
 end % iopt loop
-
-option.colormap = option.nonRMSDz;
-if strcmp(option.nonRMSDz,'on')
-    option.titleRMS = 'off';
-end
 
 end %function get_taylor_diagram_options
 
