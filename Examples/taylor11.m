@@ -15,8 +15,7 @@
 % and 4 prediction values, for a total of 5 values. The plot is written to 
 % a file in Portable Network Graphics (PNG) format.
 % 
-% This data was provide courtesy of Mostafa Khoshchehreh, title??, 
-% affiliation??
+% This data was provide courtesy of Mostafa Khoshchehreh
 
 % Author: Peter A. Rochford
 %         Symplectic, LLC
