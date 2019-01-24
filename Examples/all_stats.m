@@ -81,7 +81,8 @@ if (is_octave)
   stats.ccoef = corr(pred1.data,ref.data); % Octave
 else
   % Use Matlab function
-  stats.ccoef = corrcoef(pred1.data,ref.data);
+  cc = corrcoef(pred1.data,ref.data);
+  stats.ccoef = cc(1,2);
 end
 disp(['r = ' num2str(stats.ccoef)])
 
@@ -96,14 +97,23 @@ observed = [1 1 1 1 1 0 0 0 0 1];
 stats.bs = brier_score(forecast,observed);
 disp(['BS (Brier) = ' num2str(stats.bs)])
 
-% Get Brier Skill Score (SS)
+% Get Brier Skill Score (BSS)
 stats.bss = skill_score_brier(forecast,reference,observed);
 disp(['BSS (Brier) = ' num2str(stats.bss)])
+
+% Get Nash-Sutcliffe efficiency (NSE)
+stats.nse = nash_sutcliffe_efficiency(pred1.data,ref.data);
+disp(['NSE (Nash-Sutcliffe eff.) = ' num2str(stats.nse)])
 
 % Write statistics to Excel file. Note that this is slow in Octave.
 directory = pwd;
 filename = [pwd '/all_stats.xlsx'];
-write_stats(filename,stats,'overwrite',true);
+if ispc
+    write_stats(filename,stats,'overwrite',true);
+else
+    disp('Writing statistics in CSV format')
+    write_stats_table(filename,stats,'overwrite',true);
+end
 
 % Calculate statistics for target diagram
 target_stats1 = target_statistics(pred1,ref,'data');
@@ -111,7 +121,12 @@ target_stats1 = target_statistics(pred1,ref,'data');
 % Write statistics to Excel file
 filename = [pwd '/target_stats.xlsx'];
 data = {target_stats1};
-write_target_stats(filename,data,'overwrite','on');
+if ispc
+    write_target_stats(filename,data,'overwrite','on');
+else
+    disp('Writing target statistics in CSV format')
+    write_target_stats_table(filename,data,'overwrite','on');
+end
 
 % Calculate statistics for Taylor diagram
 taylor_stats1 = taylor_statistics(pred1,ref,'data');
@@ -123,8 +138,14 @@ filename = [pwd '/taylor_stats.xlsx'];
 data = {taylor_stats1, taylor_stats2, taylor_stats3};
 title = {'Expt. 1', 'Expt. 2', 'Expt. 3'};
 label = {'Observed', 'M1'};
-write_taylor_stats(filename,data,'title',title,'label', label, ...
-  'overwrite',true);
+if ispc
+    write_taylor_stats(filename,data,'title',title,'label', label, ...
+      'overwrite',true);
+else
+    disp('Writing Taylor statistics in CSV format');
+    write_taylor_stats_table(filename,data,'title',title,'label', label, ...
+        'overwrite','on');
+end
 
 % Check statistics for Taylor diagram
 diff = check_taylor_stats(taylor_stats1.sdev, taylor_stats1.crmsd, ...
