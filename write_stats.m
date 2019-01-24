@@ -1,5 +1,5 @@
 function write_stats(filename,data,varargin)
-% WRITE_STATS Write statistics to an Excel file.
+% WRITE_STATS Write statistics to an Excel file
 %
 % write_stats(filename,data[,'option',value])
 %
@@ -35,7 +35,7 @@ if exist(filename,'file')
     delete(filename);
   else
     error(['File already exists: ' filename]);
-  endif
+  end
 end
 
 % Write title information to file
@@ -47,7 +47,7 @@ headers = {'Skill Metric'};
 ncell = length(data);
 for i=1:length(data)
   headers{i+1} = ['Case ' num2str(i)];
-endfor
+end
 
 % Write descriptive title
 start_row = 2;
@@ -74,7 +74,7 @@ for i=1:nfields
     field_values = [];
     for j=1:ncell
       field_values = [field_values; getfield(data(j), fieldname{i})];
-    endfor
+    end
     
     % Store row of data
     row_data = {fieldname{i}};
