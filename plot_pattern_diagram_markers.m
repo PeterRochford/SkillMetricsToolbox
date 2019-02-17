@@ -107,7 +107,7 @@ if strcmp(option.markerLegend,'on')
         if ~isempty(option.markerLabel)
             if is_octave()
                 hLegend=legend(hp,markerLabel,'Location','northeast');
-            elseif length(markerLabel) <= 4 && maxLabelLength <= 6
+            elseif length(markerLabel) <= 6 && maxLabelLength <= 6
                 % Put legend outside diagram
                 hLegend=legend(hp,markerLabel, ...
                     'Location','northeastoutside','AutoUpdate','off', ...
@@ -124,6 +124,7 @@ if strcmp(option.markerLegend,'on')
                 ncol = ceil(nmarkers/15);
 
                 % Plot legend of multi-column markers
+                % Note the NumColumns is only available after Matlab R2017b
                 hLegend=legend(hp,markerLabel, ...
                     'Location','northeastoutside','AutoUpdate','off', ...
                     'FontSize',fontSize,'NumColumns',ncol);

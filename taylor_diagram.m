@@ -307,6 +307,9 @@ dispopt('''styleRMS''','Line style of the RMS grid');
 dispopt('''widthRMS''','Line width of the RMS grid');
 dispopt('''titleRMS''',sprintf(['''on'' (default) / ''off'': ' ...
     'Show RMSD axis title']));
+dispopt('''titleRMSDangle''',sprintf(['angle at which to display the ''RMSD''' ...
+    ' label for the\n\t\t' ...
+    'RMSD contours (Default: 160 degrees)']));
 
 disp('STD axis options:')
 dispopt('''tickSTD''','STD values to plot grid circles from origin');

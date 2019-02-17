@@ -63,7 +63,7 @@ if option.numberPanels == 1
     
     if strcmp(option.titleRMS,'on')
         clear ttt
-        DA = 15; pos1 = 160;
+        pos1 = option.titleRMSDangle; DA = 10;
         lab = 'RMSD';
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
         if option.tickRMS(1) > 0
@@ -128,8 +128,8 @@ else
     
     if strcmp(option.titleRMS,'on')
         clear ttt
-        pos1 = 160; DA = 10;
         lab = 'RMSD';
+        pos1 = option.titleRMSDangle; DA = 10;
         c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
         if option.tickRMS(1) > 0
           dd = 0.7*option.tickRMS(1)+0.3*option.tickRMS(2);

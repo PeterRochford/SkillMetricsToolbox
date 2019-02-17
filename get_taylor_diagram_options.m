@@ -86,6 +86,8 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.titleOBS        : label for observation point (Default: '')
 %   option.titleRMS        : show RMS axis label (Default: 'on')
 %   option.titleSTD        : show STD axis label (Default: 'on')
+%   option.titleRMSDangle  : angle at which to display the "RMSD" label for
+%                            the RMS contours (Default: 160 degrees)
 %
 %   option.widthCOR        : linewidth for correlation coefficient grid 
 %                            lines (Default: .8)
@@ -129,6 +131,7 @@ option.titleCOR = 'on';
 option.titleOBS = '';
 option.titleRMS = 'on';
 option.titleSTD = 'on';
+option.titleRMSDangle = 160.0;
 
 lineWidth = get(gcf, 'defaultLineLineWidth');
 option.widthCOR = lineWidth;
@@ -235,6 +238,8 @@ for iopt = 4 : 2 : narg+3
     case 'titlerms'
       option.titleRMS = optvalue;
       check_on_off(option.titleRMS);
+    case 'titlermsdangle'
+      option.titleRMSDangle = optvalue;
     case 'titlestd'
       option.titleSTD = optvalue;
       check_on_off(option.titleSTD);
