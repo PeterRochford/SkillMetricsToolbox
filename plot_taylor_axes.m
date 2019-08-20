@@ -72,6 +72,13 @@ if option.numberPanels == 1
           dd = 0.7*option.tickRMS(2)+0.3*option.tickRMS(3);
         end
 
+        % Adjust spacing of label letters if on too small an arc
+        posFraction = dd/axes.rmax;
+        if posFraction < 0.35
+            DA = 2*DA;
+            c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
+        end
+        
         % Write label in a circular arc
         ii = 0;
         for ic = 1 : length(c)
@@ -136,6 +143,15 @@ else
         else
           dd = 0.7*option.tickRMS(2)+0.3*option.tickRMS(3);
         end
+        
+        % Adjust spacing of label letters if on too small an arc
+        posFraction = dd/axes.rmax;
+        if posFraction < 0.35
+            DA = 2*DA;
+            c = fliplr(linspace(pos1-DA,pos1+DA,length(lab)));
+        end
+        
+        % Write label in a circular arc
         ii = 0;
         for ic = 1 : length(c)
             ith = c(ic);
