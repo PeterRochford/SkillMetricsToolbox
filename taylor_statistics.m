@@ -43,44 +43,10 @@ function [stats] = taylor_statistics(predicted,reference,field)
 % Validate input args
 narginchk(2,3);
 
-% Check for valid arguments
-if isstruct(predicted)
-    if ~isfield(predicted, field)
-        error(['Field is not in predicted data structure: ' field]);
-    else
-        p = getfield(predicted,field);
-    end
+if ~exist('field','var')
+    [p, r] = error_check_stats(predicted,reference);
 else
-    error('PREDICTED argument must be a data structure.');
-end
-if isstruct(reference)
-    if ~isfield(reference, field)
-        error(['Field is not in reference data structure: ' field]);
-    else
-        r = getfield(reference,field);
-    end
-else
-    error('REFERENCE argument must be a data structure.');
-end
-
-% Check that dimensions of predicted and reference fields match
-pdims= size(p);
-rdims= size(r);
-if length(pdims) ~= length(rdims)
-    error(['Number of predicted and reference field dimensions do not' ...
-        ' match.\n' ...
-        'length(predicted)= ' num2str(length(size(p))) ...
-        ', length(reference)= ' num2str(length(size(r))) ...
-        ],class(pdims));
-end
-for i=1:length(pdims)
-    if pdims(i) ~= rdims(i)
-        error(['Predicted and reference field dimensions do not' ...
-            ' match.\n' ...
-            'size(predicted)= ' num2str(size(p)) ...
-            ', size(reference)= ' num2str(size(r)) ...
-            ],class(pdims));
-    end
+    [p, r] = error_check_stats(predicted,reference,field);
 end
 
 % Calculate correlation coefficient
