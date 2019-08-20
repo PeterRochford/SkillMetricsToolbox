@@ -84,7 +84,9 @@ for ic = 1 : length(option.tickRMS)
         end
     end
 end
-axes.rms.tickLabel = ttt;
+if exist('ttt','var') == 1
+    axes.rms.tickLabel = ttt;
+end
 
 % DRAW STD CIRCLES:
 % draw radial circles
