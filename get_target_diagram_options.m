@@ -107,7 +107,17 @@ for iopt = 4 : 2 : narg+3
         case 'markercolor'
             option.markerColor=optvalue;
         case 'markerlabel'
-            option.markerLabel=optvalue;
+            if iscell(optvalue)
+                option.markerLabel=optvalue;
+            else
+                try
+                    test = keys(optvalue);
+                catch
+                    error(['markerlabel value is not a cell array ' ...
+                        'or map: ' optvalue]);
+                end
+                option.markerLabel=optvalue;
+            end
         case 'markerlabelcolor'
             option.markerLabelColor=optvalue;
         case 'markerlegend'
