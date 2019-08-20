@@ -174,8 +174,16 @@ for iopt = 4 : 2 : narg+3
     case 'markercolor'
         option.markerColor=optvalue;
     case 'markerlabel'
-        % Exclude the label for the reference statistics
-        option.markerLabel=optvalue(2:end);
+        if isa(optvalue,'cell')
+            % Exclude the label for the reference statistics
+            option.markerLabel=optvalue(2:end);
+        elseif isMap(optvalue)
+            % Only contains labels for the markers
+            option.markerLabel=optvalue;
+        else
+            error(['markerLabel type is not a cell array or map: ' ...
+                        class(markerLabel)]);
+        end
     case 'markerlabelcolor'
         option.markerLabelColor=optvalue;
     case 'markerlegend'
