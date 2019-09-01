@@ -109,11 +109,18 @@ elseif isMap(markerLabel)
     for k = keys(markerLabel)
         key = k{1};
         value = markerLabel(key);
+        if length(value) == 1
+            markerColor = value;
+            marker='o';
+        else
+            markerColor = value(1);
+            marker = value(2);
+        end
         legendLabels = strvcat(legendLabels,key);
         i = i + 1;
-        h = plot(NaN,NaN,['o' value],'MarkerSize',markerSize, ...
-            'MarkerFaceColor',value,'MarkerEdgeColor',value);
-        lMarker = [lMarker; value];
+        h = plot(NaN,NaN,[marker markerColor],'MarkerSize',markerSize, ...
+            'MarkerFaceColor',markerColor,'MarkerEdgeColor',markerColor);
+        lMarker = [lMarker; markerColor];
         hl = [hl; h];
         hold on;
     end
