@@ -36,6 +36,8 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'EastOutside'
 %
+%   option.markerKey       : key to use when marker labels specified as a
+%                            map
 %   option.markerLabelColor : marker label color (Default 'k')
 %   option.markerdisplayed : markers to use for individual experiments
 %   option.markerLabel     : name of the experiment to use for marker
@@ -68,6 +70,7 @@ option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
+option.markerKey = '';
 option.markerLegend = 'off';
 option.markerSize = 10;
 option.normalized = 'off';
@@ -106,6 +109,8 @@ for iopt = 4 : 2 : narg+3
             option.markerDisplayed=optvalue;
         case 'markercolor'
             option.markerColor=optvalue;
+        case 'markerkey'
+            option.markerKey=optvalue;
         case 'markerlabel'
             if iscell(optvalue)
                 option.markerLabel=optvalue;
