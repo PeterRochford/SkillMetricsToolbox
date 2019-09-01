@@ -35,7 +35,11 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'eastoutside'
 %   option.markerColor     : single color to use for all markers (Default: red)
-%   option.markerDisplayed : markers to use for individual experiments
+%   option.markerDisplayed : markers to use for individual experiments,
+%                            'marker' for markers
+%                            'colorbar' for a color bar
+%   option.markerKey       : key to use when marker labels specified as a
+%                            map
 %   option.markerLabel     : name of the experiment to use for marker
 %   option.markerLabelColor: marker label color (Default 'k')
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
@@ -112,6 +116,7 @@ option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
 option.markerDisplayed = 'marker';
+option.markerKey = '';
 option.markerLegend = 'off';
 option.markerObs = 'none';
 option.markerSize = 10;
@@ -173,6 +178,8 @@ for iopt = 4 : 2 : narg+3
         option.markerDisplayed=optvalue;
     case 'markercolor'
         option.markerColor=optvalue;
+    case 'markerkey'
+        option.markerKey=optvalue;
     case 'markerlabel'
         if isa(optvalue,'cell')
             % Exclude the label for the reference statistics
