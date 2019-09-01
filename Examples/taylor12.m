@@ -17,14 +17,13 @@
 % structure. Details on the contents of the data structures (once loaded)
 % can be obtained by simply entering the data structure variable name at 
 % the command prompt, e.g. 
-% >> target_stats1 = 
+% >> taylor_stats1 = 
 % 
 %   struct with fields:
 % 
-%      bias: [14×1 double]
-%     crmsd: [14×1 double]
-%      rmsd: [14×1 double]
-%      type: 'unnormalized'
+%      sdev: [15×1 double]
+%     crmsd: [15×1 double]
+%     ccoef: [15×1 double]
 %
 % The data in these files are statistics calculated from yearly time series
 % of Standard Precipitation Index value over the Mekong basin, a 
@@ -74,13 +73,14 @@ label = containers.Map({'ERA-5', 'TRMM'}, {'r', 'b'});
 %	>> taylor_diagram
 alpha = 0.0;
 [hp, ht, axl] = taylor_diagram(taylor_stats1.sdev,taylor_stats1.crmsd, ...
-    taylor_stats1.ccoef, 'markerColor','r', 'tickRMS',0.25:0.25:1.25, ...
-    'rmslabelformat','%.2f', 'alpha', alpha, 'markerLabel', label);
+    taylor_stats1.ccoef, 'tickRMS',0.25:0.25:1.25, ...
+    'rmslabelformat','%.2f', 'alpha', alpha, 'markerLabel', label, ...
+    'markerKey', 'ERA-5');
 
 % Overlay the second dataset
 [hp, ht, axl] = taylor_diagram(taylor_stats2.sdev,taylor_stats2.crmsd, ...
-    taylor_stats2.ccoef, 'markerColor','b', 'alpha', alpha, ...
-    'overlay','on');
+    taylor_stats2.ccoef, 'alpha', alpha, 'markerLabel', label, ...
+    'markerKey', 'TRMM', 'overlay','on');
 
 % Write plot to file
 writepng(gcf,'taylor12.png');
