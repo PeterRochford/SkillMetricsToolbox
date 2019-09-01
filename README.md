@@ -7,6 +7,6 @@ There is also a simple program "Examples/all_stats.m" that provides examples of 
 
 A help window that provides a summary of the example scripts can be called up within Matlab after the toolbox has been added to the Matlab path by using the commands:
 
-doc 'Skill Metrics Toolbox'
+doc 'SkillMetricsToolbox'
 
-doc 'Skill Metrics Toolbox/Examples'
+doc 'SkillMetricsToolbox/Examples'
