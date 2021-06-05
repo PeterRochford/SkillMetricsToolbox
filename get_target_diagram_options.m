@@ -44,6 +44,7 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
 %                            (Default 'off')
 %   option.markerSize      : marker size (Default 12)
+%   option.markerSymbol    : marker symbol (Default 'o')
 %
 %   option.normalized      : statistics supplied are normalized with 
 %                            respect to the standard deviation of reference
@@ -73,6 +74,7 @@ option.markerDisplayed = 'marker';
 option.markerKey = '';
 option.markerLegend = 'off';
 option.markerSize = 10;
+option.markerSymbol = 'o';
 option.normalized = 'off';
 option.obsUncertainty = 0.0;
 option.overlay = 'off';
@@ -130,6 +132,8 @@ for iopt = 4 : 2 : narg+3
             check_on_off(option.markerLegend);
         case 'markersize'
             option.markerSize=optvalue;
+        case 'markersymbol'
+            option.markerSymbol=optvalue;
         case 'nonrmsdz'
             error('nonRMSDz is an obsolete option. Use CMapZdata instead.');
         case 'normalized'

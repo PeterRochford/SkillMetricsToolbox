@@ -73,20 +73,20 @@ else
             end
             value = markerLabel(key);
             if length(value) == 1
-                marker = ['o' value];
+                marker = [option.markerSymbol value];
             else
                 marker = [value(2) value(1)];
             end
         elseif iscellstr(markerLabel)
             % cell array
-            marker = ['o' option.markerColor];
+            marker = [option.markerSymbol option.markerColor];
         else
             % string array
-            marker = ['o' option.markerColor];
+            marker = [option.markerSymbol option.markerColor];
         end
     else
         % default of color dot
-        marker = ['o' option.markerColor];
+        marker = [option.markerSymbol option.markerColor];
     end
 end
 

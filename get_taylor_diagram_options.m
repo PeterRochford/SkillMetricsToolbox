@@ -32,6 +32,7 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                        max range of CMapZData values ('off').
 %                        (Default : 'on')
 %
+%   option.labelRMS        : RMS axis label (Default: 'RMSD')
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'eastoutside'
 %   option.markerColor     : single color to use for all markers (Default: red)
@@ -47,6 +48,7 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %                            A choice of 'none' will suppress appearance of
 %                            marker. (Default 'none')
 %   option.markerSize      : marker size (Default 10)
+%   option.markerSymbol    : marker symbol (Default 'o')
 %
 %   option.numberPanels    : Number of panels to display
 %                            = 1 for positive correlations
@@ -112,6 +114,7 @@ option.colOBS = 'm';
 option.colRMS = [0 .6 0];
 option.colSTD = [0 0 0];
 option.colormap = 'on';
+option.labelRMS = 'RMSD';
 option.locationColorBar = 'NorthOutside';
 option.markerColor = 'r';
 option.markerLabelColor = 'k';
@@ -120,6 +123,7 @@ option.markerKey = '';
 option.markerLegend = 'off';
 option.markerObs = 'none';
 option.markerSize = 10;
+option.markerSymbol = 'o';
 option.overlay = 'off';
 option.rmslabelformat = '%.f';
 option.showlabelsCOR = 'on';
@@ -170,6 +174,8 @@ for iopt = 4 : 2 : narg+3
          option.colRMS = optvalue;
     case 'colstd'
         option.colSTD = optvalue;
+    case 'labelrms'
+        option.labelRMS = optvalue;
     case 'limstd'
         option.axismax = optvalue;
     case 'locationcolorbar'
@@ -200,6 +206,8 @@ for iopt = 4 : 2 : narg+3
         option.markerObs=optvalue;
     case 'markersize'
         option.markerSize=optvalue;
+    case 'markersymbol'
+        option.markerSymbol=optvalue;
     case 'nonrmsdz'
         error('nonRMSDz is an obsolete option. Use CMapZdata instead.');
     case 'numberpanels'
