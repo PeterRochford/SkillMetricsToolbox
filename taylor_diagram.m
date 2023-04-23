@@ -132,8 +132,7 @@ option = get_taylor_diagram_options(CORs,narg,varargin{:});
 
 % __ Check the input statistics if requested.
 if strcmp(option.checkSTATS,'on')
-    last = length(STDs);
-    check_taylor_stats(STDs(2:last), RMSs(2:last), CORs(2:last), 0.02);
+    check_taylor_stats(STDs, RMSs, CORs, 1e-4);
 end %checkStats
 
 % __ Express statistics in polar coordinates.
