@@ -22,24 +22,25 @@ function diff = check_taylor_stats(STDs, CRMSDs, CORs, threshold)
 
 narginchk(3,4);
 if nargin == 3
-   threshold = 0.01;
+   threshold = 1e-4;
 elseif threshold < 1e-7
-    error(['threshold value must be positive: ' num2str(threshold)]);
+    error(['threshold value must be >= 1e-7. threshold=', ...
+        num2str(threshold)]);
 end
 
 diff = CRMSDs(2:end).^2 - (STDs(2:end).^2 + STDs(1)^2 - ...
        2*STDs(2:end)*STDs(1).*CORs(2:end));
 diff = abs(diff./CRMSDs(2:end).^2);
-if find(diff > threshold)
-    ii = find(diff > threshold)
+ii = find(diff > threshold);
+if length(ii) > 0
     if length(ii) == length(diff)
-        error(['Incompatible data\nYou must have:' ...
-            '\nCRMSDs - sqrt(STDs.^2 + STDs(1)^2 - ' ...
+        error('Incompatible data\nYou must have:\n%s', ...
+            ['CRMSDs - sqrt(STDs.^2 + STDs(1)^2 - ' ...
             '2*STDs*STDs(1).*CORs) = 0 !'])
     else
-        index = sprintf('% d',ii);
-        disp(['Incompatible data indices: ' index])
-        disp('You must have:')
+        index = sprintf('% d',ii');
+        disp(['Incompatible data indices: ', index])
+        disp('You must have all elements satisfy:')
         disp(['CRMSDs^2 - sqrt(STDs.^2 + STDs(1)^2 - ' ...
             '2*STDs*STDs(1).*CORs) = 0 !']);
         error('CHECK_TAYLOR_STATS');
