@@ -36,9 +36,14 @@ function [option] = get_target_diagram_options(narg,varargin)
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'EastOutside'
 %
+%   option.markerColor     : single color to use for all markers. Can be
+%                            specified as a short name (e.g. 'r') or an RGB
+%                            triplet (e.g. [1, 0, 0]) (Default: red)
 %   option.markerKey       : key to use when marker labels specified as a
 %                            map
-%   option.markerLabelColor : marker label color (Default 'k')
+%   option.markerLabelColor: marker label color. Can be specified as a
+%                            short name (e.g. 'k') or an RGB triplet
+%                            (e.g. [0, 0, 0]) (Default: black)
 %   option.markerdisplayed : markers to use for individual experiments
 %   option.markerLabel     : name of the experiment to use for marker
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
@@ -80,7 +85,6 @@ option.obsUncertainty = 0.0;
 option.overlay = 'off';
 
 % Load custom options, storing values in option data structure
-nopt = narg/2;
 for iopt = 4 : 2 : narg+3
     optname  = varargin{iopt};
     optvalue = varargin{iopt+1};
@@ -110,7 +114,7 @@ for iopt = 4 : 2 : narg+3
         case 'markerdisplayed'
             option.markerDisplayed=optvalue;
         case 'markercolor'
-            option.markerColor=optvalue;
+            option.markerColor=check_color(optvalue);
         case 'markerkey'
             option.markerKey=optvalue;
         case 'markerlabel'
@@ -118,7 +122,7 @@ for iopt = 4 : 2 : narg+3
                 option.markerLabel=optvalue;
             else
                 try
-                    test = keys(optvalue);
+                    keys(optvalue);
                 catch
                     error(['markerlabel value is not a cell array ' ...
                         'or map: ' optvalue]);
@@ -126,7 +130,7 @@ for iopt = 4 : 2 : narg+3
                 option.markerLabel=optvalue;
             end
         case 'markerlabelcolor'
-            option.markerLabelColor=optvalue;
+            option.markerLabelColor=check_color(optvalue);
         case 'markerlegend'
             option.markerLegend=optvalue;
             check_on_off(option.markerLegend);
@@ -158,3 +162,4 @@ for iopt = 4 : 2 : narg+3
 end % iopt loop
 
 end %function get_target_diagram_options
+
