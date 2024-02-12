@@ -15,12 +15,12 @@ end
 
 % Report duplicates to screen
 disp('Duplicate pairs of statistics:');
-for i=1:n
-    tuple = duplicates{i};
-    i = tuple{1}; j = tuple{2};
+for k=1:n
+    data = duplicates{k};
+    i = data{1}; j = data{2};
     message = ['(' num2str(i) ', ' num2str(j) ', (' ...
-        num2str(tuple{3}{1}) ', ' num2str(tuple{3}{2}) '), (' ...
-        num2str(tuple{4}{1}) ', ' num2str(tuple{4}{2}) '))'];
+        num2str(data{3}(1)) ', ' num2str(data{3}(2)) '), (' ...
+        num2str(data{4}(1)) ', ' num2str(data{4}(2)) '))'];
     disp(message);
 end
  
