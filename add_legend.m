@@ -182,7 +182,7 @@ drawnow;
 % Process for all markers
 for i=1:length(lMarker)
     % Restore marker transparency
-    hm = setMarkerColor(handle(i),lMarker(i),alpha);
+    hm = setMarkerColor(handle(i),lMarker(i,:),alpha);
 end
 
 % Get legend components
@@ -196,7 +196,7 @@ for isymbol = 1:length(hLegendComponents)
     
     % Set legend to same transparency as marker
     icolor = length(hLegendComponents) + 1 - isymbol;
-    hm = setMarkerColor(hLegendMarker,lMarker(icolor),alpha); % Apply transparency to marker
+    hm = setMarkerColor(hLegendMarker,lMarker(icolor,:),alpha); % Apply transparency to marker
 end
 
 end %function legendMarkers
