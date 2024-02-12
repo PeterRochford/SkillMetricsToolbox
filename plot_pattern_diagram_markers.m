@@ -33,7 +33,7 @@ fontSize = get(gcf,'DefaultAxesFontSize');
 markerSize = option.markerSize;
 
 % Define markers to use in pattern diagram
-marker = get_markers(X,option);
+[markerSymbol, markerColor] = get_markers(X,option);
 
 if strcmp(option.markerLegend,'on')
     % Check that marker labels have been provided
@@ -49,14 +49,14 @@ if strcmp(option.markerLegend,'on')
     ht = cell(1); % create an empty cell to return
     for i=1:length(X)
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
-            h = plot(X(i),Y(i),marker(i,:),'MarkerSize',markerSize, ...
-                'MarkerEdgeColor',marker(i,2), ...
+            h = plot(X(i),Y(i),markerSymbol(i),'MarkerFaceColor',markerColor(i,:), ...
+                'MarkerEdgeColor',markerColor(i,:), 'MarkerSize',markerSize, ...
                 'Linewidth',2.5);
-            hm = setMarkerColor(h,marker(i,2),alpha); % Apply transparency to marker
+            hm = setMarkerColor(h,markerColor(i,:),alpha); % Apply transparency to marker
             hp = [hp; h];
             markerLabel = [markerLabel; option.markerLabel(:,i)];
             hMarker = [hMarker; hm];
-            lMarker = [lMarker; marker(i,2)];
+            lMarker = [lMarker; markerColor(i,:)];
             hold on;
         end % if limit test
     end %for loop
@@ -73,11 +73,10 @@ else
     for i=1:length(X)
         if abs(X(i)) <= limit & abs(Y(i)) <= limit
             % Plot marker
-            h = plot(X(i),Y(i),marker,'MarkerSize',markerSize, ...
-                'MarkerFaceColor',marker(2), ...
-                'MarkerEdgeColor',marker(2), ...
-                'Linewidth',2.5);
-            hm = setMarkerColor(h,marker(2),alpha); % Apply transparency to marker
+            h = plot(X(i),Y(i),markerSymbol, ...
+                'MarkerSize',markerSize,'MarkerFaceColor',markerColor, ...
+                'MarkerEdgeColor',markerColor,'Linewidth',2.5);
+            hm = setMarkerColor(h,markerColor,alpha); % Apply transparency to marker
             hp = [hp; h];
             
             if isfield(option,'markerLabel') && isa(option.markerLabel,'cell')
