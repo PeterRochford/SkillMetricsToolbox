@@ -1,4 +1,4 @@
-function marker = get_markers(X,option)
+function [markerSymbol, markerColor] = get_markers(X,option)
 %GET_MARKERS Define markers to use in a pattern diagram
 %
 %   marker = GET_MARKERS(X,OPTION)
@@ -15,14 +15,15 @@ function marker = get_markers(X,option)
 %   option.markerLabel : labels for markers
 %
 %   OUTPUTS:
-% 	marker: returns symbols and colors of markers
+% 	markerSymbol: returns marker symbols
+% 	markerColor:  returns marker RGB colors
 
 if strcmp(option.markerLegend,'on')
     % Use markers of different colors and shapes
     
     % Define markers
     kind=['+';'o';'x';'s';'d';'^';'v';'p';'*'];
-    colorm=['b';'r';'g';'c';'m';'y';'k'];
+    colorm=['b';'r';'g';'c';'m';'y';'k']; % short names
     if (length(X) > 70)
         disp('You must introduce new markers to plot more than 70 cases.')
         disp('The ''marker'' character array needs to be extended inside the code.')
@@ -32,27 +33,30 @@ if strcmp(option.markerLegend,'on')
     if length(X) <= length(kind)
         % Enough symbols, so use all markers with specified color
         n=1;
-        marker(1:(size(colorm,1)*size(kind,1)),1:2)=' ';
+        markerSymbol(1:(size(colorm,1)*size(kind,1)))=' ';
+        markerColor=zeros(size(colorm,1)*size(kind,1),3); %store as RGB
         for ic=1:size(colorm,1)
             for ik=1:size(kind,1)
-                marker(n,:)=[kind(ik,:) option.markerColor];
+                markerSymbol(n)=kind(ik,:);
+                markerColor(n,:)=option.markerColor;
                 n=n+1;
             end
         end
     else
         % Define markers and colors using predefined list
         n=1;
-        marker(1:(size(colorm,1)*size(kind,1)),1:2)=' ';
+        markerSymbol(1:(size(colorm,1)*size(kind,1)))=' ';
+        markerColor=zeros(size(colorm,1)*size(kind,1),3); %store as RGB
         for ic=1:size(colorm,1)
             for ik=1:size(kind,1)
-                marker(n,:)=[kind(ik,:) colorm(ic,:)];
+                markerSymbol(n)=kind(ik,:);
+                markerColor(n,:)=validatecolor(colorm(ic,:));
                 n=n+1;
             end
         end
     end
 else
     % Use specified markers
-
     if isfield(option,'markerLabel')
         % Get information from markerLabel
         markerLabel = option.markerLabel;
@@ -72,21 +76,28 @@ else
                 error(['Key not in map: markerLabel(' key ')']);
             end
             value = markerLabel(key);
+            mColor = check_color(value);
+
             if length(value) == 1
-                marker = [option.markerSymbol value];
+                markerSymbol = option.markerSymbol;
+                markerColor = mColor;
+
             else
-                marker = [value(2) value(1)];
+                markerSymbol = value(2);
+                markerColor = validatecolor(value(1));
             end
-        elseif iscellstr(markerLabel)
+        elseif iscellstr(markerLabel) || isstring(markerLabel)
             % cell array
-            marker = [option.markerSymbol option.markerColor];
+            markerSymbol = option.markerSymbol;
+            markerColor = option.markerColor;
         else
-            % string array
-            marker = [option.markerSymbol option.markerColor];
+            markerSymbol = option.markerSymbol;
+            markerColor = option.markerColor;
         end
     else
         % default of color dot
-        marker = [option.markerSymbol option.markerColor];
+        markerSymbol = option.markerSymbol;
+        markerColor = option.markerColor;
     end
 end
 
