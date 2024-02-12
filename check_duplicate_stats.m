@@ -37,18 +37,17 @@ end
 % Search for duplicate pairs of statistics
 duplicates = {};
 n = length(stats1);
-nduplicate = 0;
 for i=1:n
     for j=i+1:n
         diff1 = abs((stats1(i) - stats1(j))/stats1(i));
         diff2 = abs((stats2(i) - stats2(j))/stats2(i));
         if diff1 < threshold && diff2 < threshold
-            nduplicate = nduplicate + 1;
-            pair1 = py.tuple({stats1(i), stats2(i)});
-            pair2 = py.tuple({stats1(j), stats2(j)});
-            duplicates{nduplicate} = py.tuple({i, j, pair1, pair2});
+            pair1 = [stats1(i), stats2(i)];
+            pair2 = [stats1(j), stats2(j)];
+            data = {i, j, pair1, pair2};
+            duplicates{end+1} = data;
         end
     end
 end
- 
+
 end % check_duplicate_stats
