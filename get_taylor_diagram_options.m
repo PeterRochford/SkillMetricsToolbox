@@ -35,14 +35,18 @@ function [option] = get_taylor_diagram_options(CORs,narg,varargin)
 %   option.labelRMS        : RMS axis label (Default: 'RMSD')
 %   option.locationColorBar : location for the colorbar, 'NorthOutside'
 %                             or 'eastoutside'
-%   option.markerColor     : single color to use for all markers (Default: red)
+%   option.markerColor     : single color to use for all markers. Can be
+%                            specified as a short name (e.g. 'r') or an RGB
+%                            triplet (e.g. [1, 0, 0]) (Default: red)
 %   option.markerDisplayed : markers to use for individual experiments,
 %                            'marker' for markers
 %                            'colorbar' for a color bar
 %   option.markerKey       : key to use when marker labels specified as a
 %                            map
 %   option.markerLabel     : name of the experiment to use for marker
-%   option.markerLabelColor: marker label color (Default 'k')
+%   option.markerLabelColor: marker label color. Can be specified as a
+%                            short name (e.g. 'k') or an RGB triplet
+%                            (e.g. [0, 0, 0]) (Default: black)
 %   option.markerLegend    : 'on'/'off' switch to display marker legend
 %   option.markerObs       : marker to use for x-axis indicating observed STD
 %                            A choice of 'none' will suppress appearance of
@@ -183,7 +187,7 @@ for iopt = 4 : 2 : narg+3
     case 'markerdisplayed'
         option.markerDisplayed=optvalue;
     case 'markercolor'
-        option.markerColor=optvalue;
+        option.markerColor=check_color(optvalue);
     case 'markerkey'
         option.markerKey=optvalue;
     case 'markerlabel'
@@ -198,7 +202,7 @@ for iopt = 4 : 2 : narg+3
                         class(markerLabel)]);
         end
     case 'markerlabelcolor'
-        option.markerLabelColor=optvalue;
+        option.markerLabelColor=check_color(optvalue);
     case 'markerlegend'
         option.markerLegend=optvalue;
         check_on_off(option.markerLegend);
